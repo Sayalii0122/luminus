@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "17db7da44303feeb1abc",
+  "position": {
+    "x": 15,
+    "y": 8,
+    "z": 200,
+    "height": 40,
+    "width": 400,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": {
+              "expr": {
+                "Literal": {
+                  "Value": "[{\"textRuns\":[{\"value\":\"Leasing & Move Activity\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontSize\":\"20px\",\"color\":\"#FFFFFF\"}}]}]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
