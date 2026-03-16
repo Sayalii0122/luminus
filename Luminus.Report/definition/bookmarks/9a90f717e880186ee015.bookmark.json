@@ -1,0 +1,1091 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.0.0/schema.json",
+  "displayName": "Area Occupancy",
+  "name": "9a90f717e880186ee015",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "3a10d7a5583699b9bd56",
+      "85057b4ac0a5e0ba9529"
+    ]
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "280d92ac0666e5dda7a6",
+    "sections": {
+      "280d92ac0666e5dda7a6": {
+        "visualContainers": {
+          "df0472725a9aa8eabcb4": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "65caf00e7cb2e9505b04",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Move-Ins"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3ac87dba54d2d1707d02",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Move-Outs"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "daec7d37d057b2608ad0",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Net Move-Ins/Out"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ea5d2b9bb970506adade",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {}
+            }
+          },
+          "3d2e5b27233bb606bd01": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5115ddf7c03b0805d477",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Days Parameter"
+                        }
+                      },
+                      "Property": "Days Parameter"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "d",
+                                "Entity": "Days Parameter",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "d"
+                                          }
+                                        },
+                                        "Property": "Days Parameter"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "15D"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "numericStart": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "15D"
+                            }
+                          }
+                        },
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Single'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Days Parameter"
+                        }
+                      },
+                      "Property": "Days Parameter"
+                    }
+                  }
+                ]
+              },
+              "expansionStates": [
+                {
+                  "roles": [
+                    "Values"
+                  ],
+                  "levels": [
+                    {
+                      "queryRefs": [
+                        "Days Parameter.Days Parameter"
+                      ],
+                      "isCollapsed": true,
+                      "identityKeys": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Entity": "Days Parameter"
+                              }
+                            },
+                            "Property": "Days Parameter"
+                          }
+                        }
+                      ],
+                      "isPinned": true
+                    }
+                  ],
+                  "root": {
+                    "identityValues": null
+                  }
+                }
+              ]
+            }
+          },
+          "d5c18abb9c13e64c7c05": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "35b9adb214ba60b8b8c5": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "85057b4ac0a5e0ba9529": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c5b688a82bb80d0d0109",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Occupied Rate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "27496f8a04e9e9b496d7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Occupied Rate % Change Prior Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e61d18618dd13b852390",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Occupied Rate % Change Prior Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9ec2453339bcb332c02b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "spaces_historical"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "spaces_historical"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "spaces_historical"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "2b9cb48319045a04edd4": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f4ce52905bd0d4881040",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Area Occupancy Rate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "74363c652dd0a6638be1",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Unit Occupancy Rate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "124bc47bebe20222ca96",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Occupied Rate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "c4a7d1673aa1689b04a8",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "# Leases_past_due"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "fbf304d93cc78cdeb517",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "% Leases Autopay"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "f0f9a1f16d924400dd02",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Autopay Difference (%)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "763ba9a0b97a4151c15e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Occupied Rate Difference (%)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "2270912de50790c986a6",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "08f519b27402972458cd",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "MTD Move-Ins"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f2af44295dd42b042358": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "377b6fafd8014c13608d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "17acd518d438e8047090",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimFacility"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "3a10d7a5583699b9bd56": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c2c5eb8d10b7081ac1cc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Area Occupancy Rate"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ba064304ac919102de5b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Area Occupancy % Change Prior Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9f7b601a539176697c7e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Area Occupancy % Change Prior Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0aeff7101316c4807c27",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "spaces_historical"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Area Occupancy Rate"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "spaces_historical"
+                        }
+                      },
+                      "Property": "facility_name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "634ee86ae6e5a6a7390b": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "b2c924cc0eea7e6db3e0": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "4de3e0dbddcec124b53c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PeriodDates"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "p",
+                                "Entity": "PeriodDates",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 3,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "p"
+                                          }
+                                        },
+                                        "Property": "Date"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "datetime'2025-02-03T00:00:00'"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "endDate": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "datetime'2025-02-02T00:00:00'"
+                            }
+                          }
+                        },
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Between'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PeriodDates"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PeriodDates"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "0fe3a61759d3c0e1207a": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "180413b2c72a56920359": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "535f76ddb1e5540405a0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PeriodDates"
+                        }
+                      },
+                      "Property": "Period"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "p",
+                                "Entity": "PeriodDates",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "p"
+                                            }
+                                          },
+                                          "Property": "Period"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'Last 60 Days'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PeriodDates"
+                        }
+                      },
+                      "Property": "Period"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "e5b2e6e07406b495ea27": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "85db52e52b75bb57c3cc",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "b",
+                        "Entity": "book_entries",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "b"
+                                    }
+                                  },
+                                  "Property": "book"
+                                }
+                              }
+                            ],
+                            "Values": [
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'ACCOUNT_RECEIVABLE'"
+                                  }
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "book_entries"
+                        }
+                      },
+                      "Property": "book"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "99eb4a161088a0847700",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AllMeasures"
+                        }
+                      },
+                      "Property": "Cumulative_AR_Balance"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7c5de5674402946460b5",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "book_entries"
+                        }
+                      },
+                      "Property": "facility"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "book_entries"
+                        }
+                      },
+                      "Property": "facility"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

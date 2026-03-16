@@ -1,0 +1,423 @@
+table leases
+	lineageTag: 6ff3dadd-fecd-4e57-9022-298d07538242
+
+	column facility_id
+		dataType: string
+		lineageTag: 461f2278-36bd-4211-bebf-7939c6a58929
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		lineageTag: 61e5b054-1690-4023-a1e2-e317d9f24632
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_id
+		dataType: string
+		lineageTag: 7fb6bfdc-7171-429a-a0c2-371174971477
+		summarizeBy: none
+		sourceColumn: lease_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_name
+		dataType: string
+		lineageTag: 67a5ec74-2aed-49f9-88fd-4694f681766e
+		summarizeBy: none
+		sourceColumn: unit_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a57a2d7-8159-4863-8da7-6e8731ff8872
+		summarizeBy: sum
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_created_by
+		dataType: string
+		lineageTag: fefb7993-58b3-4cf4-91eb-81d5d6de0d74
+		summarizeBy: none
+		sourceColumn: lease_created_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_started
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4e1402aa-4ca1-4885-a7d8-78208e43cfe7
+		summarizeBy: none
+		sourceColumn: lease_started
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column lease_ended
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 88d686e5-df65-433a-9a23-82cc58e0140f
+		summarizeBy: none
+		sourceColumn: lease_ended
+
+		variation Variation
+			isDefault
+			relationship: 53ad1bc6-2d2f-414d-90aa-8782d7f5b88a
+			defaultHierarchy: LocalDateTable_bc22894c-4f74-4a21-b5da-f87473424755.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column lease_rent_original
+		dataType: double
+		lineageTag: b46bc21e-a236-4421-9684-62b340d317ee
+		summarizeBy: sum
+		sourceColumn: lease_rent_original
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lease_rent_current
+		dataType: double
+		lineageTag: d66e7d28-3535-4391-9469-006b047f7354
+		summarizeBy: sum
+		sourceColumn: lease_rent_current
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lease_rent_next
+		dataType: double
+		lineageTag: a6c8014e-022f-489f-bfcf-590d212a0955
+		summarizeBy: sum
+		sourceColumn: lease_rent_next
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lease_rent_next_chg_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ca632be1-1f82-4ec6-8b0e-a9481e02544d
+		summarizeBy: none
+		sourceColumn: lease_rent_next_chg_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column lease_rent_last_chg_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a603b14a-60c0-4b14-bd3b-05ae1d885751
+		summarizeBy: none
+		sourceColumn: lease_rent_last_chg_date
+
+		variation Variation
+			isDefault
+			relationship: f6e6623d-2a2b-4119-a1b6-8d52651a3146
+			defaultHierarchy: LocalDateTable_cffe3fd7-9fe1-4122-a8a1-083528f1c8c5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column lease_all_discounts
+		dataType: string
+		lineageTag: a07d58a9-2d9d-420b-aeb1-5b56d731116c
+		summarizeBy: none
+		sourceColumn: lease_all_discounts
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_lease_paid
+		dataType: int64
+		formatString: 0
+		lineageTag: 07508bbc-2997-44a3-a6f5-b061cb7be09c
+		summarizeBy: sum
+		sourceColumn: is_lease_paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_late_since_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 541d8939-1ce8-48e4-b330-42dc6d03f2ba
+		summarizeBy: none
+		sourceColumn: status_late_since_date
+
+		variation Variation
+			isDefault
+			relationship: 4731e454-8e1d-49a7-9213-1dd3a433086c
+			defaultHierarchy: LocalDateTable_af7fbc9e-2837-4012-9b41-3498cb32def5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status_paid_through_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3f8fa891-d690-4b26-8000-2410b6e3bfca
+		summarizeBy: none
+		sourceColumn: status_paid_through_date
+
+		variation Variation
+			isDefault
+			relationship: 8eca9907-13de-46e4-b267-24b2c96ae304
+			defaultHierarchy: LocalDateTable_bdf38da7-b330-410e-b99e-99a62b6dafd7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status_paid_on_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7064e300-7309-48b5-b284-766444b5756e
+		summarizeBy: none
+		sourceColumn: status_paid_on_date
+
+		variation Variation
+			isDefault
+			relationship: 96e61696-28f6-44e5-9207-be439c1b938e
+			defaultHierarchy: LocalDateTable_0b56fe0d-92d8-4196-8c07-a003ccc82f4e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column is_needs_overlock
+		dataType: int64
+		formatString: 0
+		lineageTag: 81537826-4882-49f3-bf98-466d05cedcc0
+		summarizeBy: sum
+		sourceColumn: is_needs_overlock
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_in_auction
+		dataType: int64
+		formatString: 0
+		lineageTag: c798cdc2-1aa7-4e0a-82ee-cd5eae5d398c
+		summarizeBy: sum
+		sourceColumn: is_in_auction
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_autopay_enabled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 29c1e838-b287-4a6b-badf-f8d38167d93c
+		summarizeBy: none
+		sourceColumn: is_autopay_enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column ins_premium
+		dataType: double
+		lineageTag: e0dd72a1-1f58-4e3f-83a1-0e17af9246b1
+		summarizeBy: sum
+		sourceColumn: ins_premium
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ins_coverage_level
+		dataType: double
+		lineageTag: e17d5690-d7bc-4db0-97b9-75ca758ed151
+		summarizeBy: sum
+		sourceColumn: ins_coverage_level
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column access_code
+		dataType: string
+		lineageTag: 84d48267-4aac-4d06-adec-aa47607ffffc
+		summarizeBy: none
+		sourceColumn: access_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_access_code_enabled
+		dataType: int64
+		formatString: 0
+		lineageTag: f8b71141-6f44-4c1a-b270-afd05b703827
+		summarizeBy: sum
+		sourceColumn: is_access_code_enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_id
+		dataType: string
+		lineageTag: 8daeb904-cd89-42ba-bc11-b1fa8e86225b
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_pinned_note
+		dataType: string
+		lineageTag: 40699a00-770e-419c-98cf-a7d6bb762ee7
+		summarizeBy: none
+		sourceColumn: contact_pinned_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_military
+		dataType: int64
+		formatString: 0
+		lineageTag: b5c75860-5de4-444e-83fa-f6a4767e9830
+		summarizeBy: sum
+		sourceColumn: is_military
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_name
+		dataType: string
+		lineageTag: 721df1f9-3742-4ddf-8e9c-abea8b82fb87
+		summarizeBy: none
+		sourceColumn: contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_company_name
+		dataType: string
+		lineageTag: 116a4e7f-24b6-4282-8990-da9cb82d8850
+		summarizeBy: none
+		sourceColumn: contact_company_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_email
+		dataType: string
+		lineageTag: 19b39649-6d52-4039-8d93-475cafcb3187
+		summarizeBy: none
+		sourceColumn: contact_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_phone
+		dataType: string
+		lineageTag: 0800844f-0745-4dce-8b59-64591d625137
+		summarizeBy: none
+		sourceColumn: contact_phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_address_1
+		dataType: string
+		lineageTag: c533c6b2-f758-442d-a382-efaddfac5de5
+		summarizeBy: none
+		sourceColumn: contact_address_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_address_2
+		dataType: string
+		lineageTag: 62fb6ec1-feb1-429d-bcb4-ad76e50f340f
+		summarizeBy: none
+		sourceColumn: contact_address_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_city
+		dataType: string
+		lineageTag: a9151f1c-a364-42eb-b10c-ea6102f6b034
+		summarizeBy: none
+		sourceColumn: contact_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_state
+		dataType: string
+		lineageTag: 234076b2-adeb-45bd-a7a3-4dc7742406dd
+		summarizeBy: none
+		sourceColumn: contact_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_zip
+		dataType: string
+		lineageTag: 4a66f581-cdcf-4b17-b154-c180831b7932
+		summarizeBy: none
+		sourceColumn: contact_zip
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_lifetime_payments
+		dataType: double
+		lineageTag: a584bb57-a445-40df-9d72-9002b6bd55a2
+		summarizeBy: sum
+		sourceColumn: lease_lifetime_payments
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column balance_ar
+		dataType: double
+		lineageTag: 335dbba3-9f97-4c2b-af4d-a3d97847832e
+		summarizeBy: sum
+		sourceColumn: balance_ar
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column balance_deposit
+		dataType: double
+		lineageTag: ddfd1776-4faa-4330-9b89-97c9a6ba217a
+		summarizeBy: sum
+		sourceColumn: balance_deposit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column balance_prepaid
+		dataType: double
+		lineageTag: 79ac567f-7adb-48cd-9b56-494891a6f4dd
+		summarizeBy: sum
+		sourceColumn: balance_prepaid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_id
+		dataType: string
+		lineageTag: 7847d0cd-9b97-448a-8ce5-ee5bcca0c2a5
+		summarizeBy: none
+		sourceColumn: unit_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition leases = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    leases_View = authorized_views_Schema{[Name="leases",Kind="View"]}[Data]
+				in
+				    leases_View
+
+	annotation PBI_ResultType = Table
+

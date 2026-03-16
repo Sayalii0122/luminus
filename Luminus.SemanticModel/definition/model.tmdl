@@ -1,0 +1,67 @@
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	maxParallelismPerRefresh: 4
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["payments","units","managers","pricing_group","leases","leads","contact","customer_touches","unit_turnover","spaces_historical","book_entries","ga_events","result_occupancy"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table units
+ref table payments
+ref table DateTableTemplate_bfeb5ae5-ab17-4ecd-bb3a-6a8df1d1048f
+ref table LocalDateTable_43877007-1b3c-4048-9e9f-08aee09af255
+ref table LocalDateTable_655e779f-5fbd-4ddd-b822-91413830c24c
+ref table managers
+ref table pricing_group
+ref table leases
+ref table LocalDateTable_bc22894c-4f74-4a21-b5da-f87473424755
+ref table LocalDateTable_cffe3fd7-9fe1-4122-a8a1-083528f1c8c5
+ref table LocalDateTable_af7fbc9e-2837-4012-9b41-3498cb32def5
+ref table LocalDateTable_bdf38da7-b330-410e-b99e-99a62b6dafd7
+ref table LocalDateTable_0b56fe0d-92d8-4196-8c07-a003ccc82f4e
+ref table leads
+ref table LocalDateTable_6047f84b-3094-405c-9710-a9caddb025eb
+ref table LocalDateTable_2dc6adbe-4a6c-4b28-aa16-aabdfa68d8f2
+ref table LocalDateTable_1e140d97-e35e-4122-b12f-bebf4621d85b
+ref table contact
+ref table LocalDateTable_e7e2b675-21bb-4913-bf97-935171110e9b
+ref table LocalDateTable_1626a27c-7459-49d6-b59d-1aa31e3a88e4
+ref table LocalDateTable_192ba615-0811-4c17-8cbb-713444938ba5
+ref table customer_touches
+ref table LocalDateTable_3fdbabab-d916-4945-aace-e7d5a2397382
+ref table unit_turnover
+ref table LocalDateTable_b460961d-2a3b-4272-9d76-1df6cc6def1d
+ref table LocalDateTable_fffca6ba-912f-4ea0-8c62-5cecb6da54a8
+ref table spaces_historical
+ref table LocalDateTable_09b6a7f9-8c48-4537-af0d-7032ff9916d2
+ref table book_entries
+ref table LocalDateTable_0567a3d4-9b03-49b6-9a39-a51b772c7d3d
+ref table LocalDateTable_93d6e791-8844-4134-9542-a029c6225c61
+ref table ga_events
+ref table LocalDateTable_fbf258a8-fca1-45bd-b047-53a4ac004b0b
+ref table DimFacility
+ref table AllMeasures
+ref table 'Days Parameter'
+ref table Metrics
+ref table Calendar
+ref table PeriodDates
+ref table Date
+ref table DimFacilityTemp
+ref table result_occupancy
+ref table LocalDateTable_a2f93a2c-c335-4c6e-a21a-bb5e13371920
+ref table LocalDateTable_c6742515-4a94-4351-80c9-332ab0d9ebf4
+ref table LocalDateTable_f4817a0d-7383-4625-96a5-03b2a906335c
+ref table LocalDateTable_4658f7f2-e0f7-4199-9a4a-9aaf74d4bed3
+ref table LocalDateTable_1308073f-9157-4dcc-b71c-df5cd85104ff
+ref table LocalDateTable_e99c2dd2-e471-4f56-bb38-a5d494a6d88c
+ref table LocalDateTable_60e88d25-cef6-46e7-bfd7-a6f98f5b3d3e
+
+ref cultureInfo en-IN
+

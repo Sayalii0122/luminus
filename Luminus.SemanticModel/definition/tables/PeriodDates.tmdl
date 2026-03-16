@@ -1,0 +1,226 @@
+table PeriodDates
+	lineageTag: 80be74b2-b09f-4e80-9f89-50394c9226b4
+
+	column Date
+		formatString: mm/dd/yyyy
+		lineageTag: c1f4b9f1-8cbb-4637-97da-b3e389a9a0e4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Year
+		formatString: 0
+		lineageTag: dc98830a-200f-40b7-9041-c78c06ff467a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: b0df5c70-776c-4dd2-9d9b-a4babc264a73
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month #'
+		formatString: 0
+		lineageTag: d179dbe4-60f2-408b-b623-af71646d8fb8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Month #]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Day'
+		lineageTag: 60c8059f-1146-4e1f-9e58-6dda6bacc7b3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Week Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Day Number'
+		formatString: 0
+		lineageTag: 51d7b445-7023-42c6-9bf8-4a048ea7ce71
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Week Day Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month'
+		lineageTag: d7744426-3efe-479b-b78c-12ac3fc251bc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Year Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month Number'
+		formatString: 0
+		lineageTag: e8796e62-f58e-41d2-86aa-0cc2e95a0f3a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Year Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Month'
+		formatString: General Date
+		lineageTag: 61684e5c-cd01-4ef0-8ba1-fd89d0190ec4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[End of Month]
+
+		variation Variation
+			isDefault
+			relationship: 12e0208c-05c1-46f3-94d8-95e09e78a415
+			defaultHierarchy: LocalDateTable_f4817a0d-7383-4625-96a5-03b2a906335c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		formatString: 0
+		lineageTag: c2a31a23-26c1-4cda-9cff-40c47b30451f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Week Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Week'
+		lineageTag: d6ade921-6eb1-4246-9843-074b5b2092f7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Year Week]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Week Number'
+		formatString: 0
+		lineageTag: a46cfbdf-82cc-4b0c-a3a6-04b2d641023d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[Year Week Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Start'
+		formatString: General Date
+		lineageTag: a388e6af-5220-44e0-a39d-956aeef0e182
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Week Start]
+
+		variation Variation
+			isDefault
+			relationship: 68d6b579-9835-4f85-9a21-3a8bd05027c5
+			defaultHierarchy: LocalDateTable_1308073f-9157-4dcc-b71c-df5cd85104ff.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week End'
+		formatString: General Date
+		lineageTag: d1e64fe7-c9d4-485e-898e-9f0a73947e7b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Week End]
+
+		variation Variation
+			isDefault
+			relationship: ca17fe03-0d58-4923-b669-623b6b21b7e9
+			defaultHierarchy: LocalDateTable_60e88d25-cef6-46e7-bfd7-a6f98f5b3d3e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Range'
+		lineageTag: c56a38c8-b1d0-4259-a415-e547b9adfd1d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Week Range]
+
+		annotation SummarizationSetBy = Automatic
+
+	column QTR
+		formatString: 0
+		lineageTag: 0147c10f-321f-4064-8d0c-30d09846cb4a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[QTR]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-QTR
+		lineageTag: 9214f119-a2fa-4028-8a59-21200ec7457d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[Year-QTR]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQTRNumber
+		formatString: 0
+		lineageTag: 657d2169-8773-4d4d-b3e6-34870d24dd61
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendar[YearQTRNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		lineageTag: 5c433a8f-1922-4a11-93c4-136d70ccf319
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Period]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		formatString: 0
+		lineageTag: d3256d80-6c55-4e34-a6e5-d2fb736dc248
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PeriodDates = calculated
+		mode: import
+		source = ```
+				
+				VAR _datetable = Calendar
+				VAR _today = TODAY()
+				VAR _month = MONTH(TODAY())
+				VAR _year = YEAR(TODAY())
+				VAR _thismonthstart = DATE(_year,_month,1)
+				VAR _thisyearstart = DATE(_year,1,1)
+				VAR _lastmonthstart = EDATE(_thismonthstart,-1)
+				VAR _lastmonthend = _thismonthstart-1  
+				VAR _thisquarterstart = DATE(YEAR(_today),SWITCH(true,_month>9,10,_month>6,7,_month>3,4,1),1)
+				
+				RETURN UNION(
+				    ADDCOLUMNS(FILTER(_datetable,[Date]=_today),"Period","Today","Order",1),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]=_today-1),"Period","Yesterday","Order",2),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>_today-7),"Period","Last 7 Days","Order",3),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>_today-30),"Period","Last 30 Days","Order",4),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>_today-60),"Period","Last 60 Days","Order",5),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>_today-90),"Period","Last 90 Days","Order",6),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>_today-365),"Period","Last 365 Days","Order",7),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>=_thismonthstart),"Period","This Month","Order",8),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>=_thisquarterstart),"Period","This Quarter","Order",9),
+				    ADDCOLUMNS(FILTER(_datetable,[Date]>=_thisyearstart),"Period","This Year","Order",10),
+				    ADDCOLUMNS(_datetable,"Period","Custom","Order",11)
+				    )
+				
+				```
+
+	annotation PBI_Id = 0fb70088365648b19704d33593639d49
+

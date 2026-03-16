@@ -1,0 +1,165 @@
+table contact
+	lineageTag: 47dc2a3b-3a0a-4dd5-84e1-c58d89f512cc
+
+	column contact_id
+		dataType: string
+		lineageTag: df3aa5fd-e4a0-47bf-8d81-3509641ae3f3
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column address
+		dataType: string
+		lineageTag: 9839e779-53e1-44a9-81ad-fd4a2ce61393
+		summarizeBy: none
+		sourceColumn: address
+
+		annotation SummarizationSetBy = Automatic
+
+	column address2
+		dataType: string
+		lineageTag: 1309ef4d-eab5-40b2-9f81-f735ea414748
+		summarizeBy: none
+		sourceColumn: address2
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_name
+		dataType: string
+		lineageTag: 751b6aad-2f99-4cd2-bfc2-aa9939fc2405
+		summarizeBy: none
+		sourceColumn: company_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 1dff198f-9dc5-4ed5-b511-d2a73503db56
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 3c8ecf91-a939-4a2e-800d-8b103973e0a6
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: f44fda9b-bf25-47da-8586-ed9ed7144b0b
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column zip
+		dataType: string
+		lineageTag: 60206281-e6ee-4d20-a655-7d2da4c9d672
+		summarizeBy: none
+		sourceColumn: zip
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 5f6eabb5-1fe9-4324-abef-f39b52b0494b
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: 6c1e9a81-6140-4461-afc9-ddd497497815
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 60c3e0bb-76d0-4a0a-ab4f-30cab03e7afa
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Variation
+			isDefault
+			relationship: dd820498-2ae9-49e5-8531-ed6d8f23c4bd
+			defaultHierarchy: LocalDateTable_e7e2b675-21bb-4913-bf97-935171110e9b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5e010379-7bfe-4850-89d6-3a477c4de37a
+		summarizeBy: none
+		sourceColumn: updated_at
+
+		variation Variation
+			isDefault
+			relationship: 97dfda6d-1371-4fcc-811c-df76c95bcb80
+			defaultHierarchy: LocalDateTable_1626a27c-7459-49d6-b59d-1aa31e3a88e4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_of_birth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 696c4ca6-b163-4f00-aed9-839dd02f8e18
+		summarizeBy: none
+		sourceColumn: date_of_birth
+
+		variation Variation
+			isDefault
+			relationship: 9d16fb46-d8e6-44f0-8358-3e0950c6299b
+			defaultHierarchy: LocalDateTable_192ba615-0811-4c17-8cbb-713444938ba5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column is_military
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f40bd666-22c8-4837-8053-002ab148f1a7
+		summarizeBy: none
+		sourceColumn: is_military
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_status
+		dataType: string
+		lineageTag: eda9e822-a26f-4c32-97ab-bff16ce92771
+		summarizeBy: none
+		sourceColumn: lead_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_source
+		dataType: string
+		lineageTag: b2cf0b8b-d0ea-47b4-a267-e6fc8e3c0f78
+		summarizeBy: none
+		sourceColumn: lead_source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition contact = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    contact_View = authorized_views_Schema{[Name="contact",Kind="View"]}[Data]
+				in
+				    contact_View
+
+	annotation PBI_ResultType = Table
+

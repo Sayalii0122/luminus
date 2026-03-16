@@ -1,0 +1,242 @@
+relationship 1b85e393-e621-41f7-9f01-26239b2319a7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: payments.payment_date
+	toColumn: LocalDateTable_43877007-1b3c-4048-9e9f-08aee09af255.Date
+
+relationship 801def64-abe7-4059-aba8-d65a1ca1fa15
+	joinOnDateBehavior: datePartOnly
+	fromColumn: payments.payment_datetime
+	toColumn: LocalDateTable_655e779f-5fbd-4ddd-b822-91413830c24c.Date
+
+relationship 53ad1bc6-2d2f-414d-90aa-8782d7f5b88a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leases.lease_ended
+	toColumn: LocalDateTable_bc22894c-4f74-4a21-b5da-f87473424755.Date
+
+relationship f6e6623d-2a2b-4119-a1b6-8d52651a3146
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leases.lease_rent_last_chg_date
+	toColumn: LocalDateTable_cffe3fd7-9fe1-4122-a8a1-083528f1c8c5.Date
+
+relationship 4731e454-8e1d-49a7-9213-1dd3a433086c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leases.status_late_since_date
+	toColumn: LocalDateTable_af7fbc9e-2837-4012-9b41-3498cb32def5.Date
+
+relationship 8eca9907-13de-46e4-b267-24b2c96ae304
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leases.status_paid_through_date
+	toColumn: LocalDateTable_bdf38da7-b330-410e-b99e-99a62b6dafd7.Date
+
+relationship 96e61696-28f6-44e5-9207-be439c1b938e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leases.status_paid_on_date
+	toColumn: LocalDateTable_0b56fe0d-92d8-4196-8c07-a003ccc82f4e.Date
+
+relationship 43501a45-9fcc-465b-b3ef-8619c8b9a6aa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leads.created_at
+	toColumn: LocalDateTable_6047f84b-3094-405c-9710-a9caddb025eb.Date
+
+relationship c155f0ef-1311-4398-afe1-557f5dab15f0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leads.updated_at
+	toColumn: LocalDateTable_2dc6adbe-4a6c-4b28-aa16-aabdfa68d8f2.Date
+
+relationship aa0b853b-13c2-4d10-ad42-6dc9104b4a93
+	joinOnDateBehavior: datePartOnly
+	fromColumn: leads.converted_datetime
+	toColumn: LocalDateTable_1e140d97-e35e-4122-b12f-bebf4621d85b.Date
+
+relationship dd820498-2ae9-49e5-8531-ed6d8f23c4bd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contact.created_at
+	toColumn: LocalDateTable_e7e2b675-21bb-4913-bf97-935171110e9b.Date
+
+relationship 97dfda6d-1371-4fcc-811c-df76c95bcb80
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contact.updated_at
+	toColumn: LocalDateTable_1626a27c-7459-49d6-b59d-1aa31e3a88e4.Date
+
+relationship 9d16fb46-d8e6-44f0-8358-3e0950c6299b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: contact.date_of_birth
+	toColumn: LocalDateTable_192ba615-0811-4c17-8cbb-713444938ba5.Date
+
+relationship f9bce856-9a7c-48f4-9c23-e3041af54835
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customer_touches.created_at
+	toColumn: LocalDateTable_3fdbabab-d916-4945-aace-e7d5a2397382.Date
+
+relationship 54e1ed1e-d9e3-4c5b-978e-f3f24ecdd548
+	joinOnDateBehavior: datePartOnly
+	fromColumn: unit_turnover.lease_start_date
+	toColumn: LocalDateTable_b460961d-2a3b-4272-9d76-1df6cc6def1d.Date
+
+relationship d995e09c-c21c-4969-afad-2a690e022e2b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: unit_turnover.lease_end_date
+	toColumn: LocalDateTable_fffca6ba-912f-4ea0-8c62-5cecb6da54a8.Date
+
+relationship 34a27894-afdc-487a-95e9-2f0b9e448d84
+	joinOnDateBehavior: datePartOnly
+	fromColumn: spaces_historical.occ_start_dt
+	toColumn: LocalDateTable_09b6a7f9-8c48-4537-af0d-7032ff9916d2.Date
+
+relationship cb7e3746-a549-4dfc-a4a1-00b9c07d7b79
+	joinOnDateBehavior: datePartOnly
+	fromColumn: book_entries.entry_date_time
+	toColumn: LocalDateTable_0567a3d4-9b03-49b6-9a39-a51b772c7d3d.Date
+
+relationship a79daca6-9e53-440e-96a6-cf0b8bb5461b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: book_entries.accrual_start
+	toColumn: LocalDateTable_93d6e791-8844-4134-9542-a029c6225c61.Date
+
+relationship b20352b1-6c5b-485d-b146-96f3e57d78d1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ga_events.event_date
+	toColumn: LocalDateTable_fbf258a8-fca1-45bd-b047-53a4ac004b0b.Date
+
+relationship AutoDetected_12381905-dd59-4fbe-a5d8-d15c2756dc9c
+	fromColumn: units.pg_id
+	toColumn: pricing_group.pg_id
+
+relationship AutoDetected_a485a093-548f-4bf8-a8ef-a963ac5740b9
+	crossFilteringBehavior: bothDirections
+	fromColumn: leads.pg_id
+	toColumn: pricing_group.pg_id
+
+relationship AutoDetected_fdd699f4-eba9-4c33-8301-c9c16a6b9929
+	fromColumn: unit_turnover.pg_id
+	toColumn: pricing_group.pg_id
+
+relationship AutoDetected_edac9a97-5735-4965-9315-bd9d6c17a49e
+	fromColumn: spaces_historical.pg_id
+	toColumn: pricing_group.pg_id
+
+relationship AutoDetected_5adc3b37-f55f-482d-bd8a-98299e4097b9
+	isActive: false
+	fromColumn: spaces_historical.lease_id
+	toColumn: leases.lease_id
+
+relationship AutoDetected_46b2c747-9555-4f79-bc31-aff51787d2c6
+	fromColumn: customer_touches.lead_id
+	toColumn: leads.lead_id
+
+relationship 855bb3d0-246b-104c-f68d-717bae64c211
+	isActive: false
+	fromColumn: book_entries.lease_id
+	toColumn: leases.lease_id
+
+relationship f2f3c265-ba7e-9943-e9fd-19f80c05ecda
+	fromColumn: leases.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship ef31fd3f-ba68-2f48-f5a2-2910d7b89f9d
+	fromColumn: unit_turnover.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship f6cdb77b-35d0-710f-0785-3e4884607d1d
+	fromColumn: spaces_historical.facility_id_new
+	toColumn: DimFacility.facility_id
+
+relationship AutoDetected_0a4c52f3-48aa-48e5-982a-bb6771bc28fb
+	fromColumn: leases.unit_id
+	toColumn: units.unit_id
+
+relationship AutoDetected_bffaf7ef-dd1d-4c19-9181-1c416f3146f5
+	isActive: false
+	fromColumn: book_entries.unit_id
+	toColumn: units.unit_id
+
+relationship e5f2930d-fb6e-266b-acbc-2c04eb5c602b
+	fromColumn: leads.facility_id
+	toColumn: DimFacility.facility_id
+
+relationship 2c4fdea8-7b75-f1ea-9341-0a21ae18679d
+	toCardinality: many
+	fromColumn: result_occupancy.Facility
+	toColumn: DimFacility.facility_name
+
+relationship 29d9e1b4-1cd8-4882-b225-549dee453000
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date
+	toColumn: LocalDateTable_a2f93a2c-c335-4c6e-a21a-bb5e13371920.Date
+
+relationship 6ceecf48-6b78-bb34-c58f-600dcb0899aa
+	fromColumn: unit_turnover.move_date
+	toColumn: Calendar.Date
+
+relationship b95efaac-db55-d056-1e58-bb763b289099
+	fromColumn: leases.lease_started
+	toColumn: Calendar.Date
+
+relationship f29b5622-8c77-8b09-da79-089709fce194
+	isActive: false
+	fromColumn: leases.lease_rent_next_chg_date
+	toColumn: Calendar.Date
+
+relationship a30acd17-ba99-d395-3b6b-c942ba30814a
+	fromColumn: spaces_historical.date
+	toColumn: Calendar.Date
+
+relationship deb88572-ae5a-ea0d-d223-9c1534d26900
+	crossFilteringBehavior: bothDirections
+	fromColumn: PeriodDates.Date
+	toColumn: Calendar.Date
+
+relationship 8b35740f-72df-f176-991d-691aba51588b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Date.Date
+	toColumn: Calendar.Date
+
+relationship bbd4cf38-2ed1-5fd5-819d-e7dc660b15c5
+	fromColumn: book_entries.Date
+	toColumn: Calendar.Date
+
+relationship c836a331-0aa9-3aa8-c69f-dd93e644f8a5
+	fromColumn: result_occupancy.Date
+	toColumn: Calendar.Date
+
+relationship 62baa192-5873-4e00-94d5-55ee407dd58f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'End of Month'
+	toColumn: LocalDateTable_c6742515-4a94-4351-80c9-332ab0d9ebf4.Date
+
+relationship 12e0208c-05c1-46f3-94d8-95e09e78a415
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PeriodDates.'End of Month'
+	toColumn: LocalDateTable_f4817a0d-7383-4625-96a5-03b2a906335c.Date
+
+relationship 3cd73283-033a-4ba4-b328-a264de809946
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'Week Start'
+	toColumn: LocalDateTable_4658f7f2-e0f7-4199-9a4a-9aaf74d4bed3.Date
+
+relationship 68d6b579-9835-4f85-9a21-3a8bd05027c5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PeriodDates.'Week Start'
+	toColumn: LocalDateTable_1308073f-9157-4dcc-b71c-df5cd85104ff.Date
+
+relationship c82929dc-e0a5-442e-ba28-eacdf9aa9356
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'Week End'
+	toColumn: LocalDateTable_e99c2dd2-e471-4f56-bb38-a5d494a6d88c.Date
+
+relationship ca17fe03-0d58-4923-b669-623b6b21b7e9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PeriodDates.'Week End'
+	toColumn: LocalDateTable_60e88d25-cef6-46e7-bfd7-a6f98f5b3d3e.Date
+
+relationship 77b3fd71-45f3-2528-fccd-ff0e8f5416d5
+	toCardinality: many
+	fromColumn: book_entries.facility
+	toColumn: DimFacility.facility_name
+
+relationship 10c4be23-1c0c-95c5-c10d-3b6001d64550
+	toCardinality: many
+	fromColumn: result_occupancy.Size
+	toColumn: pricing_group.name
+

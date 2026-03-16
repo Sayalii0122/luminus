@@ -1,0 +1,275 @@
+table book_entries
+	lineageTag: 417a099c-bf66-4a03-8cb5-ed5d6aae96a6
+
+	column facility
+		dataType: string
+		lineageTag: 4696c548-07b1-4991-b7cf-3034e6dd99f9
+		summarizeBy: none
+		sourceColumn: facility
+
+		annotation SummarizationSetBy = Automatic
+
+	column entry_date_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4ea2a23d-9504-42cb-9731-f5c4c5a68374
+		summarizeBy: none
+		sourceColumn: entry_date_time
+
+		variation Variation
+			isDefault
+			relationship: cb7e3746-a549-4dfc-a4a1-00b9c07d7b79
+			defaultHierarchy: LocalDateTable_0567a3d4-9b03-49b6-9a39-a51b772c7d3d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column txn_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cef4c5b1-c88b-4a3f-bb14-d1b161e51248
+		summarizeBy: sum
+		sourceColumn: txn_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 2f7f4240-be6d-4037-9dbe-6ebdb01da54a
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: e4bcaabb-fbef-4bd9-a44d-b671989197a6
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column book
+		dataType: string
+		lineageTag: d182b608-e5be-4add-9d32-e65e4c6cffe4
+		summarizeBy: none
+		sourceColumn: book
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_id
+		dataType: string
+		lineageTag: 1cef447f-b7e7-4f54-8f9b-61f3fa882102
+		summarizeBy: none
+		sourceColumn: lease_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit
+		dataType: string
+		lineageTag: d4594676-404b-42b6-9304-0ceec9b82ca9
+		summarizeBy: none
+		sourceColumn: unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column accrual_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7ec6fca6-24cd-4dc8-bca3-e3179f3ee0d8
+		summarizeBy: none
+		sourceColumn: accrual_start
+
+		variation Variation
+			isDefault
+			relationship: a79daca6-9e53-440e-96a6-cf0b8bb5461b
+			defaultHierarchy: LocalDateTable_93d6e791-8844-4134-9542-a029c6225c61.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column explanation_text
+		dataType: string
+		lineageTag: e1af8761-2bde-4c30-a69b-e1148ce8e0df
+		summarizeBy: none
+		sourceColumn: explanation_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column entry_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 943f5c1d-4846-4738-8a28-db77c8085260
+		summarizeBy: sum
+		sourceColumn: entry_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column applies_to
+		dataType: int64
+		formatString: 0
+		lineageTag: eea1537d-d061-4eb1-b329-21812cc8a6f5
+		summarizeBy: sum
+		sourceColumn: applies_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column ar_entry_category
+		dataType: string
+		lineageTag: c2867203-4891-40bd-822d-0837f7220087
+		summarizeBy: none
+		sourceColumn: ar_entry_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column explanation
+		dataType: string
+		lineageTag: 8b1f4551-4135-4abe-9568-af2d977d0e2b
+		summarizeBy: none
+		sourceColumn: explanation
+
+		annotation SummarizationSetBy = Automatic
+
+	column tax_category
+		dataType: string
+		lineageTag: 75966511-74fb-41c2-96cb-4cb3cff90b65
+		summarizeBy: none
+		sourceColumn: tax_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column tax_exempt
+		dataType: int64
+		formatString: 0
+		lineageTag: bd812ff2-b0a0-4299-82f4-e343b740f4a6
+		summarizeBy: sum
+		sourceColumn: tax_exempt
+
+		annotation SummarizationSetBy = Automatic
+
+	column amt_revenue
+		dataType: double
+		lineageTag: befc7ef3-e945-445c-b6a1-5698558ef8eb
+		summarizeBy: sum
+		sourceColumn: amt_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_payment
+		dataType: double
+		lineageTag: dd598d3c-3c35-457a-a205-502b7d6cf251
+		summarizeBy: sum
+		sourceColumn: amt_payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_asset
+		dataType: double
+		lineageTag: c05f9ed4-387b-4a97-bfdc-104007f1c2a3
+		summarizeBy: sum
+		sourceColumn: amt_asset
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_liability
+		dataType: double
+		lineageTag: 428d09bd-d448-4605-9a86-5b332f605b1b
+		summarizeBy: sum
+		sourceColumn: amt_liability
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amt_transfer
+		dataType: double
+		lineageTag: 697c5f00-d532-4209-ae6f-906103d3f254
+		summarizeBy: sum
+		sourceColumn: amt_transfer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column contact_id
+		dataType: string
+		lineageTag: e5b9ef25-f688-4c5e-9410-8faf231d6120
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_name
+		dataType: string
+		lineageTag: 0796362c-cfd7-468e-9648-c873109fe004
+		summarizeBy: none
+		sourceColumn: contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column AR_Balance =
+			var a = IF(book_entries[type] = "Debit",1,-1)
+			
+			RETURN book_entries[amount] * a
+		lineageTag: b088905a-1db8-4951-a8dd-324111b44209
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date = book_entries[entry_date_time].[Date]
+		formatString: mm/dd/yyyy
+		lineageTag: 5b4621f9-1bf6-4131-9ac2-497eb96dc7d0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column unit_id
+		dataType: string
+		lineageTag: bb5ed070-c664-4bb1-a34c-3b4ec600b59c
+		summarizeBy: none
+		sourceColumn: unit_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active = ```
+			
+			LOOKUPVALUE(
+			    leases[is_active], 
+			    leases[lease_id], 
+			    book_entries[lease_id]
+			)
+			
+			```
+		formatString: 0
+		lineageTag: cc60cdd6-8eda-4ae1-9804-3ecbdae866b8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition book_entries = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    book_entries_View = authorized_views_Schema{[Name="book_entries",Kind="View"]}[Data]
+				in
+				    book_entries_View
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

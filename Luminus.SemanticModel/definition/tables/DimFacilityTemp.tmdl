@@ -1,0 +1,35 @@
+table DimFacilityTemp
+	isHidden
+	lineageTag: d0de2426-a644-4d5e-88db-a992bd8d2fbd
+
+	column facility_id2
+		isHidden
+		lineageTag: 2fd8845b-2e1a-426f-bffc-0688a77f9bd8
+		summarizeBy: none
+		sourceColumn: spaces_historical[facility_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		isHidden
+		lineageTag: c68406ad-6bf3-490f-b8b3-51c351543999
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: spaces_historical[facility_name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id = IF(DimFacilityTemp[facility_id2]<>BLANK(),DimFacilityTemp[facility_id2],CALCULATE(FIRSTNONBLANK(DimFacilityTemp[facility_id2],DimFacilityTemp[facility_id2]),FILTER(DimFacilityTemp,DimFacilityTemp[facility_name]=EARLIER(DimFacilityTemp[facility_name]))))
+		lineageTag: 5780824e-e297-44c2-a812-a3727929b017
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimFacilityTemp = calculated
+		mode: import
+		source =
+				
+				SUMMARIZECOLUMNS(spaces_historical[facility_id],spaces_historical[facility_name])
+
+	annotation PBI_Id = 7be188c7349c4c1cb9b7de53f3f74c92
+

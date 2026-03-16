@@ -1,0 +1,88 @@
+table pricing_group
+	lineageTag: 0b55cead-bfa2-406e-9d0c-e8c989f0e849
+
+	column name
+		dataType: string
+		lineageTag: c6bba65e-fc83-413c-8929-c28868294d9d
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 5a72ff57-b77f-451e-b4de-b0d725aa1b9b
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column facility_id
+		dataType: string
+		lineageTag: b9e26514-dfaf-4e87-872c-d0c0ef581371
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column width
+		dataType: double
+		lineageTag: 3ecf5f05-7c20-4b40-8e0d-70ba3adc21e1
+		summarizeBy: sum
+		sourceColumn: width
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column height
+		dataType: double
+		lineageTag: cd20ba51-9b54-4336-b0a3-4eed03374ed7
+		summarizeBy: sum
+		sourceColumn: height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column depth
+		dataType: double
+		lineageTag: c7beec07-53ac-4d35-9465-3fa289899822
+		summarizeBy: sum
+		sourceColumn: depth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column features
+		dataType: string
+		lineageTag: 64dec2ff-3ee0-4e49-9244-ba4a97860677
+		summarizeBy: none
+		sourceColumn: features
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_id
+		dataType: string
+		lineageTag: f66e1a8b-ee0f-4f44-85b3-312e6cbbd9d8
+		summarizeBy: none
+		sourceColumn: pg_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pricing_group = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    pricing_group_View = authorized_views_Schema{[Name="pricing_group",Kind="View"]}[Data]
+				in
+				    pricing_group_View
+
+	annotation PBI_ResultType = Table
+

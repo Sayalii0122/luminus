@@ -1,0 +1,166 @@
+table ga_events
+	lineageTag: f9abdf85-ad8e-4ebd-89e1-fdeb8b64cb2c
+
+	column org_id
+		dataType: string
+		lineageTag: 0ab93d70-cfae-4b37-ac0f-7ce49a2e45bb
+		summarizeBy: none
+		sourceColumn: org_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ga_session_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b3163300-95aa-43b0-9c58-4c8a4de89997
+		summarizeBy: sum
+		sourceColumn: ga_session_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8f8b6e9b-8280-42b3-a185-a2458fc58408
+		summarizeBy: none
+		sourceColumn: event_date
+
+		variation Variation
+			isDefault
+			relationship: b20352b1-6c5b-485d-b146-96f3e57d78d1
+			defaultHierarchy: LocalDateTable_fbf258a8-fca1-45bd-b047-53a4ac004b0b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column event_name
+		dataType: string
+		lineageTag: fd74a039-c6f4-498e-b80e-ceddb89d5a5f
+		summarizeBy: none
+		sourceColumn: event_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column event_timestamp
+		dataType: int64
+		formatString: 0
+		lineageTag: 551ab3ef-f77f-46ce-928b-63cae4727f3f
+		summarizeBy: sum
+		sourceColumn: event_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column hostname
+		dataType: string
+		lineageTag: 9d71cebf-35b8-4cce-82c3-f22c9c598c8f
+		summarizeBy: none
+		sourceColumn: hostname
+
+		annotation SummarizationSetBy = Automatic
+
+	column device_category
+		dataType: string
+		lineageTag: 418e2514-e096-4b06-82b4-9db0da298b04
+		summarizeBy: none
+		sourceColumn: device_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column geo_city
+		dataType: string
+		lineageTag: 483e2f87-f2f6-42f5-94c2-7f783b47a693
+		summarizeBy: none
+		sourceColumn: geo_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column geo_country
+		dataType: string
+		lineageTag: 2282d8d7-080d-4203-b69e-8ce784b83317
+		summarizeBy: none
+		sourceColumn: geo_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column geo_continent
+		dataType: string
+		lineageTag: 79c2536c-b766-48fa-8270-47587541030b
+		summarizeBy: none
+		sourceColumn: geo_continent
+
+		annotation SummarizationSetBy = Automatic
+
+	column geo_region
+		dataType: string
+		lineageTag: 644d3d38-7285-40c9-9068-0ea63e5a0311
+		summarizeBy: none
+		sourceColumn: geo_region
+
+		annotation SummarizationSetBy = Automatic
+
+	column geo_metro
+		dataType: string
+		lineageTag: 1d13f944-939a-45c4-97d0-373aad00bd07
+		summarizeBy: none
+		sourceColumn: geo_metro
+
+		annotation SummarizationSetBy = Automatic
+
+	column traffic_source_name
+		dataType: string
+		lineageTag: d7a0dced-b545-4f1a-9317-322b7cf4bde5
+		summarizeBy: none
+		sourceColumn: traffic_source_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column traffic_source_source
+		dataType: string
+		lineageTag: 59c78ce7-6c6a-4661-8879-7cae6c04232d
+		summarizeBy: none
+		sourceColumn: traffic_source_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column traffic_source_medium
+		dataType: string
+		lineageTag: 88d91d87-f414-4052-bb46-4fea669215b1
+		summarizeBy: none
+		sourceColumn: traffic_source_medium
+
+		annotation SummarizationSetBy = Automatic
+
+	column ecommerce_transaction_id
+		dataType: string
+		lineageTag: 6ab1cad3-bc6c-4aac-9947-f5bc8672813f
+		summarizeBy: none
+		sourceColumn: ecommerce_transaction_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column ecommerce_purchase_revenue
+		dataType: double
+		lineageTag: 3d4e4bc3-101b-43a7-9b47-bd39f92f8fd6
+		summarizeBy: sum
+		sourceColumn: ecommerce_purchase_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ga_events = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    ga_events_View = authorized_views_Schema{[Name="ga_events",Kind="View"]}[Data]
+				in
+				    ga_events_View
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

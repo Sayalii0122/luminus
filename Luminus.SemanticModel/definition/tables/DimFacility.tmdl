@@ -1,0 +1,35 @@
+table DimFacility
+	lineageTag: 000a6d56-ba97-4d11-ab02-95d150c64088
+
+	column facility_id
+		lineageTag: 6ca9c9df-d953-420d-9908-f255d42d015e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: DimFacilityTemp[facility_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name = ```
+			
+			VAR FacilityName = 
+			    MAXX(
+			        FILTER(DimFacilityTemp, DimFacilityTemp[facility_id] = DimFacility[facility_id]),
+			        DimFacilityTemp[facility_name]
+			    )
+			RETURN FacilityName
+			
+			
+			```
+		lineageTag: a1273d49-6205-4c38-aa9e-e4c76e7bb3d2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimFacility = calculated
+		mode: import
+		source =
+				
+				SUMMARIZECOLUMNS(DimFacilityTemp[facility_id])
+
+	annotation PBI_Id = e2698167e52944b9859aa611820c9562
+

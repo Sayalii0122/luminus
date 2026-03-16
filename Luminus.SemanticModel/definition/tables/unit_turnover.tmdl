@@ -1,0 +1,329 @@
+table unit_turnover
+	lineageTag: c13907ec-9ce2-4918-9e5d-ab0fae883aab
+
+	measure 'Lease Rent' = SUM(unit_turnover[lease_rent])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 75d97658-603b-45a1-b767-6594f9cee156
+
+	column move_type
+		dataType: string
+		lineageTag: 55c40746-d0d0-4a6f-9cf1-4507e67ef518
+		summarizeBy: none
+		sourceColumn: move_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column move_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: f5bfc182-5dab-407a-873a-d4d7a37e55f0
+		summarizeBy: none
+		sourceColumn: move_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column facility_id
+		dataType: string
+		lineageTag: ff7f5e02-6d9a-4df8-a992-6a80166035d0
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		lineageTag: bac4b163-fecc-4cd1-9497-d1535a981abc
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_id
+		dataType: string
+		lineageTag: 58baf2a8-c4f4-4941-8817-a97b6b825ab7
+		summarizeBy: none
+		sourceColumn: unit_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_name
+		dataType: string
+		lineageTag: 37676a4b-a458-4b27-815b-f8f052ccb3eb
+		summarizeBy: none
+		sourceColumn: unit_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_type
+		dataType: string
+		lineageTag: 634235e1-6022-4659-b96f-b584bac44820
+		summarizeBy: none
+		sourceColumn: unit_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_features
+		dataType: string
+		lineageTag: 3f3a909f-1df8-406b-8d2b-fdcbbdb08328
+		summarizeBy: none
+		sourceColumn: unit_features
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_floor_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 9681942e-b6a3-4c76-9790-957e37665034
+		summarizeBy: sum
+		sourceColumn: unit_floor_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_building_name
+		dataType: string
+		lineageTag: ef1a9648-d8fa-48bf-aa4c-2e8f8c2a29b2
+		summarizeBy: none
+		sourceColumn: unit_building_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_width
+		dataType: double
+		formatString: 0.00
+		lineageTag: c501893d-40fd-4200-8a68-0423550539bf
+		summarizeBy: sum
+		sourceColumn: unit_width
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_depth
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7d82a40e-0c75-4028-b55d-c79b1d1921c1
+		summarizeBy: sum
+		sourceColumn: unit_depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_height
+		dataType: double
+		lineageTag: 99bd49ce-58cc-47fb-9c4a-bf28872bb707
+		summarizeBy: sum
+		sourceColumn: unit_height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lease_id
+		dataType: string
+		lineageTag: 181f4fd5-0f8e-4452-a30e-3490a1c34776
+		summarizeBy: none
+		sourceColumn: lease_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_created_by
+		dataType: string
+		lineageTag: d411e833-89e5-4eed-850a-26d05d1ff9d6
+		summarizeBy: none
+		sourceColumn: lease_created_by
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_rent
+		dataType: double
+		lineageTag: c6c650b3-fdd7-4be2-a5ca-6f7a7e58aa32
+		summarizeBy: sum
+		sourceColumn: lease_rent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lease_start_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 5b828599-966a-4b6c-8559-0b934a32f350
+		summarizeBy: none
+		sourceColumn: lease_start_date
+
+		variation Variation
+			isDefault
+			relationship: 54e1ed1e-d9e3-4c5b-978e-f3f24ecdd548
+			defaultHierarchy: LocalDateTable_b460961d-2a3b-4272-9d76-1df6cc6def1d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column lease_end_date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: d76ab0d4-a2df-48b5-97c4-2711ce63223d
+		summarizeBy: none
+		sourceColumn: lease_end_date
+
+		variation Variation
+			isDefault
+			relationship: d995e09c-c21c-4969-afad-2a690e022e2b
+			defaultHierarchy: LocalDateTable_fffca6ba-912f-4ea0-8c62-5cecb6da54a8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column lease_created_by_transfer
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c99d857a-37c0-4ceb-9d52-ffc755c11ab8
+		summarizeBy: none
+		sourceColumn: lease_created_by_transfer
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_terminated_by_transfer
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5c24c9d1-9a47-4d6c-80bd-9a762bc58627
+		summarizeBy: none
+		sourceColumn: lease_terminated_by_transfer
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_days_rented
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e0da0e7-960f-4983-9a44-9e2afa40e05e
+		summarizeBy: sum
+		sourceColumn: lease_days_rented
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_discounts_applied
+		dataType: string
+		lineageTag: 8d34d75b-8c81-46bc-b1ae-b8cfb933e547
+		summarizeBy: none
+		sourceColumn: lease_discounts_applied
+
+		annotation SummarizationSetBy = Automatic
+
+	column ins_premium
+		dataType: double
+		lineageTag: e59bcfc0-ffc9-4b76-9907-3f6776ab61d9
+		summarizeBy: sum
+		sourceColumn: ins_premium
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ins_coverage_level
+		dataType: double
+		lineageTag: 72b6deb2-2b4e-457e-b106-812594cb737a
+		summarizeBy: sum
+		sourceColumn: ins_coverage_level
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column contact_id
+		dataType: string
+		lineageTag: 1947f2e0-4dca-4a6a-86b6-31c28e920a9c
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_name
+		dataType: string
+		lineageTag: bc852223-bc49-49a7-a621-4ae7cf66b7fa
+		summarizeBy: none
+		sourceColumn: contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_email
+		dataType: string
+		lineageTag: f87ac699-5997-4e8b-b7e1-0b09fa2323bf
+		summarizeBy: none
+		sourceColumn: contact_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_phone
+		dataType: string
+		lineageTag: ef1f823c-4ada-4063-8aa3-90b77cbdf27b
+		summarizeBy: none
+		sourceColumn: contact_phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_id
+		dataType: string
+		lineageTag: e5e94d37-f361-4b01-8e4c-c04cfe87f43c
+		summarizeBy: none
+		sourceColumn: pg_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_name
+		dataType: string
+		lineageTag: 2568ae29-c502-4718-b47b-9b18c03a0918
+		summarizeBy: none
+		sourceColumn: pg_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_standard_rate
+		dataType: double
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 36405902-2428-4e16-9fef-5b8b5f7e6537
+		summarizeBy: sum
+		sourceColumn: pg_standard_rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'sq ft / unit' = ( unit_turnover[unit_depth] * unit_turnover[unit_width] )
+		formatString: 0.00
+		lineageTag: 1d40dcee-2747-4bc3-a1c9-e9cb08fe8415
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tenant_name =
+			
+			VAR TenantList =
+			    FILTER(spaces_historical, spaces_historical[unit_id] = unit_turnover[unit_id] && spaces_historical[date] = unit_turnover[move_date])
+			VAR SelectedTenant =
+			    CALCULATE(FIRSTNONBLANK( spaces_historical[occ_tenant_name],1),TenantList)
+			
+			RETURN
+			    SelectedTenant
+		lineageTag: e06dccc0-680d-41c9-b0e7-dbf486461261
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition unit_turnover = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    unit_turnover_View = authorized_views_Schema{[Name="unit_turnover",Kind="View"]}[Data]
+				in
+				    unit_turnover_View
+
+	annotation PBI_ResultType = Table
+

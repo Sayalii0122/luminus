@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Luminus"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2272e1ca-da44-42e4-9f96-4d320104cd2c"
+  }
+}

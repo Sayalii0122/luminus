@@ -1,0 +1,32 @@
+table Date
+	lineageTag: c2dafa11-d308-48a1-b46c-e0f72164aba8
+
+	measure Date_Slicer_filter =
+			
+			IF(
+			    SELECTEDVALUE(PeriodDates[Period]) = "Custom",
+			    MAX(PeriodDates[Date]),  -- Allows user selection
+			    BLANK()  -- Clears selection when not "Custom"
+			)
+		formatString: General Date
+		lineageTag: e5c450ca-eaec-4003-adc4-b50ce0a60e63
+
+	column Date
+		formatString: Short Date
+		lineageTag: 8d1e5230-0a6e-4ee1-a4fa-c048aac01b44
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source =
+				CALENDAR(
+				                MIN('Calendar'[Date]),
+				                MAX('Calendar'[Date])
+				                )
+
+	annotation PBI_Id = f9fd864c50e44ef6bab6b8356de81647
+

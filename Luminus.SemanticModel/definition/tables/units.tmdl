@@ -1,0 +1,242 @@
+table units
+	lineageTag: 290d9fb4-d6fa-41c0-8b52-fbe749f4117f
+
+	column facility_id
+		dataType: string
+		lineageTag: f5fd26ed-ba41-4cff-98b5-d121b82446f8
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		lineageTag: fded90a6-c668-440a-b824-181113aee917
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_id
+		dataType: string
+		lineageTag: e25660ff-26f8-4877-b7c1-90b6c6dc2a55
+		summarizeBy: none
+		sourceColumn: unit_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_name
+		dataType: string
+		lineageTag: 0b64cca0-eb70-49d6-8eed-195008245a7a
+		summarizeBy: none
+		sourceColumn: unit_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_type
+		dataType: string
+		lineageTag: 3370c622-5bbe-4354-9e68-2edca2c9928e
+		summarizeBy: none
+		sourceColumn: unit_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_features
+		dataType: string
+		lineageTag: 8435c2c6-4c6e-4ebd-b46e-885077977756
+		summarizeBy: none
+		sourceColumn: unit_features
+
+		annotation SummarizationSetBy = Automatic
+
+	column pricing_group
+		dataType: string
+		lineageTag: ca5ca731-1c68-407f-b0ad-5dad04c8ac31
+		summarizeBy: none
+		sourceColumn: pricing_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate_managed
+		dataType: double
+		lineageTag: 7e028af7-b58a-45d8-91cb-2e249dde41e7
+		summarizeBy: sum
+		sourceColumn: rate_managed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_floor_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 265afbb1-5348-44a7-9e41-b7ac8d615b80
+		summarizeBy: sum
+		sourceColumn: unit_floor_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_building_name
+		dataType: string
+		lineageTag: b2ebee37-2aa7-4b47-bf64-e957e3652893
+		summarizeBy: none
+		sourceColumn: unit_building_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_width
+		dataType: double
+		formatString: 0.00
+		lineageTag: 8b3522b4-ec1f-48d9-a4c4-d8a5d11ec5f1
+		summarizeBy: sum
+		sourceColumn: unit_width
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_depth
+		dataType: double
+		formatString: 0.00
+		lineageTag: da4d0002-aded-490a-8870-974d21fa0b35
+		summarizeBy: sum
+		sourceColumn: unit_depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_height
+		dataType: double
+		lineageTag: 709a27c9-de6d-44b5-b549-a124dff82b44
+		summarizeBy: sum
+		sourceColumn: unit_height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_leased
+		dataType: int64
+		formatString: 0
+		lineageTag: e17e0fc2-28ff-4147-83dd-30f8ffe539f7
+		summarizeBy: sum
+		sourceColumn: is_leased
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_insurable
+		dataType: int64
+		formatString: 0
+		lineageTag: cec829d7-6a88-46ff-ad5a-5cd4762729a8
+		summarizeBy: sum
+		sourceColumn: is_insurable
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_rentable
+		dataType: int64
+		formatString: 0
+		lineageTag: 2132d2d5-fdfe-44fa-b574-50d2559c7af0
+		summarizeBy: sum
+		sourceColumn: is_rentable
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_overlocked
+		dataType: int64
+		formatString: 0
+		lineageTag: 8697c82d-1d7a-4f5e-ad25-e57c574f322f
+		summarizeBy: sum
+		sourceColumn: is_overlocked
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_unrentable_reason
+		dataType: string
+		lineageTag: 3a2e808e-432d-431f-9f52-627c475c902e
+		summarizeBy: none
+		sourceColumn: unit_unrentable_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_unrentable_note
+		dataType: string
+		lineageTag: 69bad3d7-01d6-4aa2-a88f-d2920ad0bdbe
+		summarizeBy: none
+		sourceColumn: unit_unrentable_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_keypad_zone
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d6b4b6a-69bb-4021-beae-c871632c406b
+		summarizeBy: sum
+		sourceColumn: unit_keypad_zone
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_time_zone
+		dataType: int64
+		formatString: 0
+		lineageTag: fecc34b7-4f21-4709-8acc-f26da04e381d
+		summarizeBy: sum
+		sourceColumn: unit_time_zone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'sq ft / unit' = ( units[unit_depth] * units [unit_width] )
+		formatString: 0.00
+		lineageTag: f66c1369-da1c-4622-a11d-d49572e12f23
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_id
+		dataType: string
+		lineageTag: 6d8fe5bc-6737-4ff1-b5ac-4f47fb40ab5f
+		summarizeBy: none
+		sourceColumn: pg_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column web_rate_override
+		dataType: double
+		lineageTag: 978404f1-6d72-4702-acac-e305ab11d97e
+		summarizeBy: sum
+		sourceColumn: web_rate_override
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column strikethrough_price_override
+		dataType: double
+		lineageTag: d6a8fab1-6583-47c7-9670-419f4b2d0137
+		summarizeBy: sum
+		sourceColumn: strikethrough_price_override
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column walk_in_rate_override
+		dataType: double
+		lineageTag: 70fe9241-ae0f-4674-8daa-36b17535c9ce
+		summarizeBy: sum
+		sourceColumn: walk_in_rate_override
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition units = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    units_View = authorized_views_Schema{[Name="units",Kind="View"]}[Data]
+				in
+				    units_View
+
+	annotation PBI_ResultType = Table
+

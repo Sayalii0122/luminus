@@ -1,0 +1,64 @@
+table managers
+	lineageTag: adfb5c05-8c64-4664-9966-e102d4913b47
+
+	column manager_id
+		dataType: string
+		lineageTag: dea96dbd-6e63-42e9-895b-6e1f16b5ff82
+		summarizeBy: none
+		sourceColumn: manager_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_name
+		dataType: string
+		lineageTag: 2aec95c4-67b7-450b-968f-9219e627ba36
+		summarizeBy: none
+		sourceColumn: manager_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_username
+		dataType: string
+		lineageTag: 214dc3f9-d6b6-4228-89b7-1352c6cf8bfd
+		summarizeBy: none
+		sourceColumn: manager_username
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_email
+		dataType: string
+		lineageTag: ab484183-d49c-4dfb-b702-bfa6a73f9a1b
+		summarizeBy: none
+		sourceColumn: manager_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_phone
+		dataType: string
+		lineageTag: 2677880e-08ad-4dce-9e07-98afa016de7e
+		summarizeBy: none
+		sourceColumn: manager_phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager_permissions
+		dataType: string
+		lineageTag: 4d1f6c49-97af-4772-8a05-465252df170b
+		summarizeBy: none
+		sourceColumn: manager_permissions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition managers = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    managers_View = authorized_views_Schema{[Name="managers",Kind="View"]}[Data]
+				in
+				    managers_View
+
+	annotation PBI_ResultType = Table
+

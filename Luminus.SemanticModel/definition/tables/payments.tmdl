@@ -1,0 +1,146 @@
+table payments
+	lineageTag: 29779875-c891-4fc6-9883-954c8f146976
+
+	column facility_id
+		dataType: string
+		lineageTag: 1d779fb5-6c6f-483a-a017-073fd19588c9
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		lineageTag: 01b4ee14-9030-4712-944c-82911151d798
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_id
+		dataType: string
+		lineageTag: 285dfa26-f5d6-4fec-8cbf-70854e56f23c
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_name
+		dataType: string
+		lineageTag: 62c42140-c3fe-4a05-9987-0332c4683c19
+		summarizeBy: none
+		sourceColumn: contact_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9c6d64a3-ac24-436b-811f-2dab2c2036dd
+		summarizeBy: none
+		sourceColumn: payment_date
+
+		variation Variation
+			isDefault
+			relationship: 1b85e393-e621-41f7-9f01-26239b2319a7
+			defaultHierarchy: LocalDateTable_43877007-1b3c-4048-9e9f-08aee09af255.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column payment_datetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9616840f-8b3c-4160-bd20-a61173402be3
+		summarizeBy: none
+		sourceColumn: payment_datetime
+
+		variation Variation
+			isDefault
+			relationship: 801def64-abe7-4059-aba8-d65a1ca1fa15
+			defaultHierarchy: LocalDateTable_655e779f-5fbd-4ddd-b822-91413830c24c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_amount
+		dataType: double
+		lineageTag: 512a3045-3c51-4093-8db0-0516c05b69b4
+		summarizeBy: sum
+		sourceColumn: payment_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payment_type
+		dataType: string
+		lineageTag: 0f621820-2914-47e8-9100-05729f39274d
+		summarizeBy: none
+		sourceColumn: payment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_status
+		dataType: string
+		lineageTag: 687c613e-767a-48f2-9e8a-082c5e0aafa2
+		summarizeBy: none
+		sourceColumn: payment_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: 59a42b75-76f3-41ef-b77c-a5af17a41509
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_card_brand
+		dataType: string
+		lineageTag: 3622f574-f6d1-4168-95ae-799d675cd7ec
+		summarizeBy: none
+		sourceColumn: payment_card_brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_card_last_four
+		dataType: string
+		lineageTag: d7e82d43-bbab-465b-8431-896ce52ba300
+		summarizeBy: none
+		sourceColumn: payment_card_last_four
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_check_number
+		dataType: string
+		lineageTag: 0ca8c1a3-6d38-4241-b210-1dd5db859cbf
+		summarizeBy: none
+		sourceColumn: payment_check_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_channel
+		dataType: string
+		lineageTag: eae328d4-7df6-47b0-8564-4266c88db8e8
+		summarizeBy: none
+		sourceColumn: payment_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payments = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    payments_View = authorized_views_Schema{[Name="payments",Kind="View"]}[Data]
+				in
+				    payments_View
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "51ff86bfd2ca2adb38e2",
+  "displayName": "Facility Performance Dashboard",
+  "displayOption": "FitToWidth",
+  "height": 1440,
+  "width": 1280,
+  "pageBinding": {
+    "name": "8cc1533ae70376e67735",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "visualInteractions": [
+    {
+      "source": "431bc286bed03e3ababc",
+      "target": "c107123fd4adeb6350d5",
+      "type": "DataFilter"
+    },
+    {
+      "source": "431bc286bed03e3ababc",
+      "target": "a84bf2e74be038413721",
+      "type": "DataFilter"
+    },
+    {
+      "source": "431bc286bed03e3ababc",
+      "target": "eac19d9c36a4cb02eacd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "431bc286bed03e3ababc",
+      "target": "7f8083c79a1024a78b8b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "978fdaf68b073b53c7d4",
+      "target": "7ad424b6b1cc7e658558",
+      "type": "DataFilter"
+    },
+    {
+      "source": "2963e56921d9e913baa1",
+      "target": "98fcef1c0dc9cb7deaab",
+      "type": "DataFilter"
+    }
+  ]
+}

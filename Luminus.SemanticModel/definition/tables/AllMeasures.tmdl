@@ -1,0 +1,1769 @@
+table AllMeasures
+	lineageTag: 1acb3d4d-9e7a-4c1e-9601-d6f7ead9662f
+
+	measure '# Units' = DISTINCTCOUNT(spaces_historical[unit_name_facility_name])
+		formatString: 0
+		lineageTag: abf747e7-7fda-4c12-af21-3bd402b53747
+
+	measure 'Occupied Units' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(spaces_historical[unit_name_facility_name]),
+			    'spaces_historical'[is_occupied] = 1
+			)
+		formatString: 0
+		lineageTag: 74547dac-2bf3-4163-b670-4955cc5168fa
+
+	measure 'Total Area' = SUM('spaces_historical'[sq ft / unit])
+		lineageTag: 7ee285c2-2c69-4761-bc7b-7ace08b64a82
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Occupied Area' =
+			
+			CALCULATE(
+			   SUM('spaces_historical'[sq ft / unit]),
+			    'spaces_historical'[is_occupied] = 1
+			)
+		lineageTag: fc2b0b3e-9d8d-4cd0-9d5c-d0cb04bc1039
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Area Occupancy Rate' =
+			
+			var a = DIVIDE(
+			    [Occupied Area],
+			    [Total Area],
+			    0
+			)
+			
+			var b = [Area Occupancy Rate old]
+			RETURN
+			a + b
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 31c41602-4628-422d-82c5-229b9e305287
+
+	measure 'Area Occupancy Rate Prior Month' = ```
+			
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Area Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Area Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Area Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Area Occupancy Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 610fa27e-2f07-4115-85fa-8d30f1535e3b
+
+	measure 'Area Occupancy Rate Prior Year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousPeriodEndDate = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			VAR PreviousQuarterStart = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousQuarterEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Area Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			        [Area Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousQuarterStart, 
+			        PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			   CALCULATE(
+			        [Area Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousYearStart, 
+			        PeriodDates[Date] <= PreviousYearEnd),
+			    "Custom",
+			    CALCULATE(
+			        [Area Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousPeriodStartDate,
+			        PeriodDates[Date] <= PreviousPeriodEndDate
+			    ),
+			    CALCULATE(
+			        [Area Occupancy Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: 4fdbe766-830a-4b53-b344-0aaf71e9c605
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Area Occupancy % Change Prior Month' =
+			
+			[Area Occupancy Rate] - [Area Occupancy Rate Prior Month]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eee053f1-f25b-465f-ae84-ece25ab8fb2b
+
+	measure 'Area Occupancy % Change Prior Year' = ```
+			
+			[Area Occupancy Rate] - [Area Occupancy Rate Prior Year]
+			
+			    
+			 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 518fa15c-87b2-45fb-b865-fc489e63a7da
+
+	measure Move-Ins =
+			
+			CALCULATE(
+			    COUNTROWS('unit_turnover'),
+			    'unit_turnover'[move_type] = "MOVE_IN",
+			    'unit_turnover'[move_date] >= MAX('Calendar'[Date]) - SELECTEDVALUE('Days Parameter'[Days Parameter], 15)
+			)
+		formatString: 0
+		lineageTag: e97372c3-b4fb-4b9f-85ab-4d1b7bd91ffa
+
+	measure Move-Outs =
+			
+			CALCULATE(
+			    COUNTROWS('unit_turnover'),
+			    'unit_turnover'[move_type] = "MOVE_OUT",
+			    'unit_turnover'[move_date] >= MAX('Calendar'[Date]) - SELECTEDVALUE('Days Parameter'[Days Parameter], 15) -- Default to 15 if none selected
+			)
+		formatString: 0
+		lineageTag: 08fa56e0-aa2f-4e1d-8b2f-7831bcf6079d
+
+	measure 'Total Autopay Leases' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('spaces_historical'[lease_id]),
+			    'spaces_historical'[Is_autopay_enabled] = 1
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 9e71b15d-57aa-468c-8b1e-63fd8f580f42
+
+	measure 'Total Leases' = ```
+			DISTINCTCOUNT('spaces_historical'[lease_id])
+			
+			```
+		formatString: 0
+		lineageTag: 738e3a14-361a-4711-836b-331d65cb4a1f
+
+	measure '% Leases Autopay' =
+			
+			DIVIDE([Total Autopay Leases],[Total Leases],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 863e6d6d-b4cb-49d3-80e0-3b661164ffc6
+
+	measure '% Leases with Insurance' = ```
+			
+			DIVIDE([LeasesWithInsurance], [Total Leases], 0)
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fc84e066-42e1-40df-adf9-5cc7e053b20c
+
+	measure 'Occupied Rate % Change Prior Month' = ```
+			
+			IF(
+			    [Previous Period Occupied Rate] = 0, 
+			    1, 
+			    DIVIDE([Occupied Rate] - [Previous Period Occupied Rate], [Previous Period Occupied Rate], 0)
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5fea2fb7-e791-422d-adac-fd55a4ba9473
+
+	measure 'Occupied Rate % Change Prior Year' = ```
+			
+			IF(
+			    [Occupied Rate Prior Year] = 0, 
+			    1, 
+			    DIVIDE([Occupied Rate] - [Occupied Rate Prior Year], [Occupied Rate Prior Year], 0)
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ff085154-3b79-4d2d-9a5a-126830b85f29
+
+	measure 'Days In Unit' = ```
+			
+			SUMX(
+			    unit_turnover,
+			    DATEDIFF(
+			        unit_turnover[lease_start_date], 
+			        unit_turnover[lease_end_date], 
+			        DAY
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: d2223b7e-ba4b-4497-ad9a-dda90dcd6c0c
+
+	measure 'Unit Occupancy Rate' = ```
+			
+			var a = DIVIDE(
+			    [Occupied Units], 
+			    [# Units], 
+			    0
+			)
+			
+			var b = [Unit Occupancy Rate old]
+			RETURN
+			a+b
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 36eb397a-8b8d-4262-b566-c03b54ac2d06
+
+	measure 'MTD Move-Ins' =
+			
+			CALCULATE(
+			    COUNTROWS('unit_turnover'),
+			    REMOVEFILTERS('PeriodDates'[Date]),
+			    'unit_turnover'[move_type] = "MOVE_IN",MONTH('Date'[Date]) = MONTH(TODAY())&& YEAR('Date'[Date]) = YEAR(TODAY())
+			)
+		formatString: 0
+		lineageTag: a15697b1-1588-4f46-8a16-6b81d5c68e15
+
+	measure 'Occupied Rate' =
+			var a =  DIVIDE(sum(spaces_historical[occ_rate]),[Date_diff],0)
+			var b = CALCULATE(SUM(result_occupancy[OccupiedRent]), result_occupancy[Size] <> "Facility")
+			RETURN a + b
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: c9e9ce73-d1c4-4b23-8604-18b2c6b0cd85
+
+	measure 'Area Occupancy % Change Trend Prior Month' =
+			
+			IF(
+			    [Area Occupancy % Change Prior Month] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Area Occupancy % Change Prior Month]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 518b4329-6721-4b79-9f14-74d22e8ca784
+
+	measure '# Leases_past_due' = CALCULATE( COUNTROWS('leases'), leases[is_lease_paid] = 0 && leases[is_active]=1)
+		formatString: 0
+		lineageTag: 06b6bef5-83e1-45f0-b624-ad23f2030022
+
+	measure '# Unrentable Units' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('spaces_historical'[unit_name_facility_name]),
+			    'spaces_historical'[is_unrentable_flag] = 1
+			)
+			
+			```
+		formatString: 0
+		lineageTag: d7e6d52d-8caa-4782-b197-4964326625cd
+
+	measure 'Area Occupancy % Change Trend Prior Year' =
+			
+			IF(
+			    [Area Occupancy % Change Prior Year] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Area Occupancy % Change Prior Year]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: e201a59f-6fef-4a03-8b57-cda1ecc88e65
+
+	measure 'Occupied Rate % Change Trend Prior Month' =
+			
+			IF(
+			    [Occupied Rate % Change Prior Month] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Occupied Rate % Change Prior Month]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: d5f286e7-36f5-4555-a5cc-2bf7d97ba7c3
+
+	measure 'Occupied Rate % Change Trend Prior Year' =
+			
+			IF(
+			    [Occupied Rate % Change Prior Year] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Occupied Rate % Change Prior Year]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 55a6c8c6-7f78-4fb3-a786-d7be2df8020b
+
+	measure 'Rent/Occupied (sq.ft.)' = DIVIDE([Occupied Rate],[Occupied Area],0)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ca7fb0cf-ddae-43b1-a6a6-c874ef5cd982
+
+	measure 'Occupied Rate Difference (%)' =
+			
+			DIVIDE(
+			    [Occupied Rate] - [Previous Period Occupied Rate],
+			    [Previous Period Occupied Rate],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2c6bdccc-34ea-484e-a3c6-4d88b1ec3325
+
+	measure 'Autopay Difference (%)' = ```
+			
+			    [% Leases Autopay] - [Previous Autopay Leases]
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eb9789db-0e03-4f8d-8bb0-1461c0c16464
+
+	measure '# Scheduled Rent Increases' =
+			CALCULATE(
+			    DISTINCTCOUNT('leases'[lease_id]),
+			    'leases'[is_active] = 1,
+			    NOT(ISBLANK('leases'[lease_rent_next_chg_date]))
+			)
+		formatString: 0
+		lineageTag: 9c8d4430-27d4-4db1-8415-f4376f09f39c
+
+	measure 'Net Move-Ins/Out' = [Move-Ins] - [Move-Outs]
+		formatString: 0
+		lineageTag: 52a34914-8b15-4ef4-9634-11dc29c5b7c8
+
+	measure 'Previous Period Occupied Rate' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Occupied Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Occupied Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Occupied Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Occupied Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		lineageTag: 145f0354-cf0a-4a05-ae43-11d009338f59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Autopay Leases' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [% Leases Autopay],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0fb2a29b-556d-4981-af35-2c60d9609a5a
+
+	measure ButtonLabel = ```
+			
+			    VAR _selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			    VAR _start = MIN(PeriodDates[Date])
+			    VAR _end = MAX(PeriodDates[Date])
+			    RETURN SWITCH(true,
+			        _selectedperiod = "Custom", FORMAT(_start,"d mmm")&" - "&FORMAT(_end,"d mmm") &" ✎", 
+			        _selectedperiod = "Today", FORMAT(_start,"d mmm yyyy") ,
+			        _selectedperiod = "Yesterday", FORMAT(_start,"d mmm yyyy") ,
+			        FORMAT(_start,"d mmm")&" - "&FORMAT(_end,"d mmm") 
+			    )
+			```
+		lineageTag: abbb5115-ad7e-4a0f-843c-77d2e7f01f84
+
+	measure 'Previous Period Move in' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Move-Ins by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: c4770690-9751-459d-aabe-7d20ec45266d
+
+	measure 'Previous Period Moved out' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Move-Outs by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: ad0e0081-e3be-4543-a9c5-c6da537ab144
+
+	measure 'Previous Period Net Move - in/out' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Net Move-Ins/Out by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 18e0c57a-4087-4aa8-80c5-2a880dc1b11c
+
+	measure 'Moved in Previous Period % change' = ```
+			
+			DIVIDE(
+			    [Move-Ins by Date] - [Previous Period Move in],
+			    [Previous Period Move in],
+			    0
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: a0bd5c51-bea7-40fe-8793-71dba20ebc98
+
+	measure 'Moved out Previous Period % change' =
+			
+			DIVIDE(
+			    [Move-Outs by Date] - [Previous Period Moved out],
+			    [Previous Period Moved out],
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 0f5c6436-6f48-4587-be95-b43c375510fa
+
+	measure 'net Moved in/out Previous Period % change' =
+			
+			DIVIDE(
+			    [Net Move-Ins/Out by Date] - [Previous Period Net Move - in/out],
+			    [Previous Period Net Move - in/out],
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: ecb7a51d-7b56-49e4-bc94-3c0d244c90d0
+
+	measure 'Move-Outs by Date' =
+			
+			CALCULATE(
+			    COUNTROWS('unit_turnover'),
+			    'unit_turnover'[move_type] = "MOVE_OUT")
+		formatString: 0
+		lineageTag: ca2f742b-8607-47d8-af30-252a2b185e1f
+
+	measure 'Move-Ins by Date' =
+			
+			CALCULATE(
+			    COUNTROWS('unit_turnover'),
+			    'unit_turnover'[move_type] = "MOVE_IN"
+			)
+		formatString: 0
+		lineageTag: f99969b0-9a2e-4de1-b35c-f029e9993d85
+
+	measure 'Net Move-Ins/Out by Date' = [Move-Ins by Date] - [Move-Outs by Date]
+		formatString: 0
+		lineageTag: 73d25f82-cc3f-4004-a5dc-1bdc4f4c4de0
+
+	measure 'Occupied Rate Prior Year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousPeriodEndDate = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			VAR PreviousQuarterStart = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousQuarterEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Occupied Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			        [Occupied Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousQuarterStart, 
+			        PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			   CALCULATE(
+			        [Occupied Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousYearStart, 
+			        PeriodDates[Date] <= PreviousYearEnd),
+			    "Custom",
+			    CALCULATE(
+			        [Occupied Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousPeriodStartDate,
+			        PeriodDates[Date] <= PreviousPeriodEndDate
+			    ),
+			    CALCULATE(
+			        [Occupied Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: 4ab87b2a-acc7-4ec6-9b90-d1a2219bb7b6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Autopay prior year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - 365
+			VAR PreviousPeriodEndDate = SelectedEndDate -365 - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedStartDate) - 1, 12, 31)
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 4, 1),
+			                DATE(YEAR(SelectedStartDate) - 1, 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 6, 30),  
+			                DATE(YEAR(SelectedStartDate) - 1, 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [% Leases Autopay],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousYearStart, 
+			            PeriodDates[Date] <= PreviousYearEnd 
+			        ),
+			    CALCULATE(
+			        [% Leases Autopay],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: 710ac40d-53bf-4ba8-88ef-08b7b656686e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Autopay Change SPLY (%)' = [% Leases Autopay] -[Autopay prior year]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7fc2355b-1912-41fe-9bcc-04d9c7017a17
+
+	measure 'Move-in prior year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - 365
+			VAR PreviousPeriodEndDate = SelectedEndDate -365 - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedStartDate) - 1, 12, 31)
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 4, 1),
+			                DATE(YEAR(SelectedStartDate) - 1, 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 6, 30),  
+			                DATE(YEAR(SelectedStartDate) - 1, 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Move-Ins by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousYearStart, 
+			            PeriodDates[Date] <= PreviousYearEnd 
+			        ),
+			    CALCULATE(
+			        [Move-Ins by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 80c8c223-2178-409f-8b94-b1eff272de54
+
+	measure 'Move-out prior year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - 365
+			VAR PreviousPeriodEndDate = SelectedEndDate -365 - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedStartDate) - 1, 12, 31)
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 4, 1),
+			                DATE(YEAR(SelectedStartDate) - 1, 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 6, 30),  
+			                DATE(YEAR(SelectedStartDate) - 1, 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Move-Outs by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousYearStart, 
+			            PeriodDates[Date] <= PreviousYearEnd 
+			        ),
+			    CALCULATE(
+			        [Move-Outs by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: cf2f4c2d-9264-4b4d-907b-1c01d1c9b0c2
+
+	measure 'Net Move-in/out prior year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - 365
+			VAR PreviousPeriodEndDate = SelectedEndDate -365 - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedStartDate) - 1, 12, 31)
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 4, 1),
+			                DATE(YEAR(SelectedStartDate) - 1, 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 2, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate) - 1, 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate) - 1, 6, 30),  
+			                DATE(YEAR(SelectedStartDate) - 1, 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Net Move-Ins/Out by Date],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousYearStart, 
+			            PeriodDates[Date] <= PreviousYearEnd 
+			        ),
+			    CALCULATE(
+			        [Net Move-Ins/Out by Date],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 3da7be90-61a0-4184-89a7-e64bd6c2d5d6
+
+	measure 'Moved in SPLY % change' = ```
+			
+			DIVIDE(
+			    [Move-Ins by Date] - [Move-in prior year],
+			    [Move-in prior year],
+			    0
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 3a3abde1-fd25-4ff0-b94f-b989b48db446
+
+	measure 'Moved out SPLY % change' = ```
+			
+			DIVIDE(
+			    [Move-Outs by Date] - [Move-out prior year],
+			    [Move-out prior year],
+			    0
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 9049bd32-ee49-4522-8e69-d0358852eb96
+
+	measure 'Net Moved in/out SPLY % change' = ```
+			
+			DIVIDE(
+			    [Net Move-Ins/Out by Date] - [Net Move-in/out prior year],
+			    [Net Move-in/out prior year],
+			    0
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: f285a9d0-5bbd-47fe-8926-84facbda03fe
+
+	measure 'Previous Period Unit Occupancy' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = SelectedStartDate - DaysInSelectedPeriod
+			VAR PreviousPeriodEndDate = SelectedStartDate - 1
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			
+			VAR PreviousQuarterStart = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 10, 1), 
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 1, 1),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 4, 1),
+			                DATE(YEAR(SelectedStartDate), 7, 1) )))
+			
+			VAR PreviousQuarterEnd = 
+			    IF(MONTH(SelectedStartDate) <= 3, 
+			        DATE(YEAR(SelectedStartDate) - 1, 12, 31),
+			        IF(MONTH(SelectedStartDate) <= 6, 
+			            DATE(YEAR(SelectedStartDate), 3, 31),  
+			            IF(MONTH(SelectedStartDate) <= 9, 
+			                DATE(YEAR(SelectedStartDate), 6, 30),  
+			                DATE(YEAR(SelectedStartDate), 9, 30))))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Unit Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(EOMONTH(SelectedStartDate, -1)), MONTH(EOMONTH(SelectedStartDate, -1)), 1),  
+			            PeriodDates[Date] <= MIN(SelectedEndDate, EOMONTH(SelectedStartDate, -1))  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			            [Unit Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= PreviousQuarterStart, 
+			            PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			        CALCULATE(
+			            [Unit Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, 1, 1), 
+			            PeriodDates[Date] <= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate)) 
+			        ),
+			    CALCULATE(
+			        [Unit Occupancy Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			```
+		lineageTag: e3cd2db2-91ea-435f-9889-7885fb57e717
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Occupancy % Change Prior Month' = ```
+			
+			    [Unit Occupancy Rate] - [Previous Period Unit Occupancy]
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: da105adf-9d33-459c-a586-a4ea7fb653ea
+
+	measure 'Unit Occupancy Prior Year' = ```
+			
+			VAR SelectedStartDate = MIN(PeriodDates[Date]) 
+			VAR SelectedEndDate = MAX(PeriodDates[Date]) 
+			VAR DaysInSelectedPeriod = DATEDIFF(SelectedStartDate, SelectedEndDate, DAY) + 1
+			VAR PreviousPeriodStartDate = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousPeriodEndDate = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR selectedperiod = SELECTEDVALUE(PeriodDates[Period])
+			VAR PreviousQuarterStart = DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), DAY(SelectedStartDate))
+			VAR PreviousQuarterEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			VAR PreviousYearStart = DATE(YEAR(SelectedStartDate) - 1, 1, 1)
+			VAR PreviousYearEnd = DATE(YEAR(SelectedEndDate) - 1, MONTH(SelectedEndDate), DAY(SelectedEndDate))
+			
+			RETURN
+			SWITCH(
+			    selectedperiod,
+			    "This Month", 
+			        CALCULATE(
+			            [Unit Occupancy Rate],
+			            REMOVEFILTERS(PeriodDates),
+			            PeriodDates[Date] >= DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1),  
+			            PeriodDates[Date] <= EOMONTH(DATE(YEAR(SelectedStartDate) - 1, MONTH(SelectedStartDate), 1), 0)  
+			        ),
+			    "This Quarter",
+			        CALCULATE(
+			        [Unit Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousQuarterStart, 
+			        PeriodDates[Date] <= PreviousQuarterEnd   
+			        ),
+			    "This Year",
+			   CALCULATE(
+			        [Unit Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousYearStart, 
+			        PeriodDates[Date] <= PreviousYearEnd),
+			    "Custom",
+			    CALCULATE(
+			        [Unit Occupancy Rate],
+			        REMOVEFILTERS(PeriodDates),
+			        PeriodDates[Date] >= PreviousPeriodStartDate,
+			        PeriodDates[Date] <= PreviousPeriodEndDate
+			    ),
+			    CALCULATE(
+			        [Unit Occupancy Rate],
+			        FILTER(
+			            ALL('PeriodDates'),
+			            PeriodDates[Date] >= PreviousPeriodStartDate &&
+			            PeriodDates[Date] <= PreviousPeriodEndDate
+			        )
+			    )
+			)
+			
+			```
+		lineageTag: 467fadb9-1d74-4bc8-9adc-e1bdfcbd2017
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Occupancy % Change Prior Year' =
+			
+			[Unit Occupancy Rate] - [Unit Occupancy Prior Year]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c8b900d5-c0dc-4b7c-bbaa-e64e87046812
+
+	measure 'Unit Occupancy % Change Trend Prior Month' =
+			
+			IF(
+			    [Unit Occupancy % Change Prior Month] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Unit Occupancy % Change Prior Month]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: eccd9641-2698-4fe9-a14c-b812ce19bef2
+
+	measure 'Unit Occupancy % Change Trend Prior Year' =
+			
+			IF(
+			    [Unit Occupancy % Change Prior Year] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Unit Occupancy % Change Prior Year]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 920a4e06-fa96-48cd-b774-9753600064d2
+
+	measure LeasesWithInsurance = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('spaces_historical'[lease_id]),
+			    'spaces_historical'[is_insurance_active] = 1
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 7521b802-bd5d-4f2d-9533-a6f99294b0b3
+
+	measure Date_diff = ```
+			DATEDIFF(MIN(PeriodDates[Date]), MAX(PeriodDates[Date]), DAY) + 1
+			
+			```
+		formatString: 0
+		lineageTag: 3d10a9a7-fe5c-449b-afb8-dc1062e94cd8
+
+	measure 'Area Occupancy latest' = ```
+			
+			CALCULATE(
+			    [Area Occupancy Rate],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 858c67f4-61e9-42c9-873f-26eb905fd74e
+
+	measure 'Occupied Rate latest' =
+			
+			CALCULATE(
+			    [Occupied Rate],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: c1e052e7-5fb5-4c8f-a657-18b10cb97a1f
+
+	measure 'Unit Occupancy latest' =
+			
+			CALCULATE(
+			    [Unit Occupancy Rate],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e32a75b9-9397-4fa7-b27a-ed8950566681
+
+	measure '% Leases Autopay latest' =
+			
+			CALCULATE(
+			    [% Leases Autopay],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 87891749-1c11-494b-811a-1f76cdefb8e4
+
+	measure '% Leases with Insurance latest' =
+			
+			CALCULATE(
+			    [% Leases with Insurance],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 927f187e-a6ff-49fa-a1a3-85d128506bd2
+
+	measure 'Scheduled Rent Increases Latest' = ```
+			
+			CALCULATE(
+			    [# Scheduled Rent Increases],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b8a16f9c-e7c0-4f9b-b6c4-0696ce8bd9d7
+
+	measure 'Unrentable Units Latest' =
+			
+			CALCULATE(
+			    [# Unrentable Units],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+		formatString: 0
+		lineageTag: a9cb3863-5ae0-4dc9-93a5-37edb7dbab22
+
+	measure 'Cumulative Leases Past Due' = ```
+			
+			VAR SelectedDate = MAX('Calendar'[Date])
+			RETURN 
+			CALCULATE(
+			    [# Leases_past_due],
+			    'Calendar'[Date] <= SelectedDate,
+			    ALL(PeriodDates)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 85fb544b-22df-47ca-bb31-b66d337b5a5f
+
+	measure 'latest date' = ```
+			
+			CALCULATE(
+			    MAX('spaces_historical'[date]),
+			    REMOVEFILTERS('PeriodDates')
+			)
+			
+			
+			```
+		formatString: General Date
+		lineageTag: 339aae56-510f-45ef-a97b-a4c0bf3c016c
+
+	measure 'Cumulative Leases Past Due latest' = ```
+			
+			CALCULATE(
+			    [Cumulative Leases Past Due],
+			    FILTER(
+			        ALL('PeriodDates'), 
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 1be06fee-a543-4297-aa4e-82bc4a8f2e51
+
+	measure 'Unrentable Units Yesterday' =
+			
+			CALCULATE(
+			    [# Unrentable Units],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date] - 1
+			    )
+			)
+		formatString: 0
+		lineageTag: a1fe272b-13ed-46d5-878d-3803e3083026
+
+	measure 'Unrentable Units Difference' = [Unrentable Units Latest] - [Unrentable Units Yesterday]
+		formatString: 0
+		lineageTag: 722746be-5a6a-4b73-8ee8-2cc13fda6af1
+
+	measure 'Unrentable Units Difference Trends' =
+			
+			IF(
+			    [Unrentable Units Difference] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Unrentable Units Difference]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 40fa1266-ea29-4a3b-aded-0c432899cef4
+
+	measure '% Leases Autopay Yesterday' =
+			
+			CALCULATE(
+			    [% Leases Autopay],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date] -1
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 532538cd-b7d2-408d-9df9-0c845d8f703f
+
+	measure '% Leases Autopay Difference' = [% Leases Autopay latest] - [% Leases Autopay Yesterday]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c04a0265-abeb-4354-ab19-31c9efa1975a
+
+	measure '% Leases Autopay Difference Trend' =
+			
+			IF(
+			    [% Leases Autopay Difference] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [% Leases Autopay Difference]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 5b39c4c9-4f4f-4510-ada7-f098390ae65f
+
+	measure 'Cumulative Leases Past Due Yesterday' = ```
+			
+			CALCULATE(
+			    [Cumulative Leases Past Due],
+			    FILTER(
+			        ALL('PeriodDates'), 
+			        'PeriodDates'[Date] = [latest date] - 1
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: f6c1b85a-185d-4a97-9f95-b342189f84f3
+
+	measure 'Cumulative Leases Past Due Difference' = [Cumulative Leases Past Due latest] - [Cumulative Leases Past Due Yesterday]
+		formatString: 0
+		lineageTag: 9df7702b-a2fd-4207-8e00-1360bca36372
+
+	measure 'Cumulative Leases Past Due Difference Trend' =
+			
+			IF(
+			    [Cumulative Leases Past Due Difference] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Cumulative Leases Past Due Difference]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 05a6be37-2483-4523-b3a8-62266cf35b17
+
+	measure '% Leases with Insurance Yesterday' =
+			
+			CALCULATE(
+			    [% Leases with Insurance],
+			    FILTER(
+			        ALL('PeriodDates'),
+			        'PeriodDates'[Date] = [latest date] - 1
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 62e0e9cb-9e65-4e41-9e21-4feb16edbf3e
+
+	measure '% Leases with Insurance Difference' = [% Leases with Insurance latest] - [% Leases with Insurance Yesterday]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b4ea8177-bb55-4cf1-8b39-191af8ec5436
+
+	measure '% Leases with Insurance Difference Trend' =
+			
+			IF(
+			    [% Leases with Insurance Difference] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [% Leases with Insurance Difference]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: 6c0d1f2f-6cee-4732-aa32-a7ad6a2c4ebe
+
+	measure 'Vacant Unit' = [# Units]-[Occupied Units]
+		formatString: 0
+		lineageTag: a8c887c4-90d8-4148-81f9-7ab167c8e4c4
+
+	measure Cumulative_AR_Balance = ```
+			
+			VAR SelectedDate = MAX('Calendar'[Date])
+			RETURN 
+			CALCULATE(
+			    SUM('book_entries'[AR_Balance]),
+			    'Calendar'[Date] <= SelectedDate,
+			    ALL(PeriodDates),
+			    
+			    USERELATIONSHIP('book_entries'[lease_id], 'leases'[lease_id])  )
+			
+			```
+		lineageTag: 3d97da19-f7f7-48bf-9aaa-a33d8452017d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cumulative Scheduled Rent Increases' = ```
+			
+			VAR SelectedDate = MAX('Calendar'[Date])
+			RETURN 
+			CALCULATE(
+			    [# Scheduled Rent Increases],
+			    'Calendar'[Date] <= SelectedDate,
+			    ALL(PeriodDates)
+			)
+			```
+		formatString: 0
+		lineageTag: 426eb425-4747-4766-b6cc-8fc780b57c2d
+
+	measure 'Cumulative Scheduled Rent Increases latest' = ```
+			
+			CALCULATE(
+			    [Cumulative Scheduled Rent Increases],
+			    FILTER(
+			        ALL('PeriodDates'), 
+			        'PeriodDates'[Date] = [latest date]
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: f691b3b2-045a-44ab-886c-fdbd4baa0ebc
+
+	measure 'Cumulative Scheduled Rent Increases Difference' = ```
+			
+			VAR Yesterday = [latest date] - 1
+			VAR CumulativeYesterday = 
+			    CALCULATE(
+			        [Cumulative Scheduled Rent Increases], 
+			        'PeriodDates'[Date] = Yesterday
+			    )
+			
+			RETURN 
+			    [Cumulative Scheduled Rent Increases latest] - CumulativeYesterday
+			
+			```
+		formatString: 0
+		lineageTag: 73daf35a-d7b7-4d66-9a57-85c5ddc786ba
+
+	measure 'Cumulative Scheduled Rent Increases Trends' =
+			
+			IF(
+			    [Cumulative Scheduled Rent Increases Difference] >= 0,
+			    UNICHAR(9650),
+			    IF(
+			         [Cumulative Scheduled Rent Increases]<0,
+			        UNICHAR(9660)
+			    )
+			)
+		lineageTag: d768a582-ae24-4aae-a3d1-8fd26751dc16
+
+	measure 'Occupied Units old' = ```
+			
+			CALCULATE(
+			    SUM(result_occupancy[# Occupied]),
+			    FILTER(
+			        result_occupancy, 
+			        result_occupancy[Size] <> "Facility"
+			    ))
+			```
+		formatString: 0
+		lineageTag: 950a30fe-c34c-4965-bc4c-5d3d15fcf276
+
+	measure 'Area Occupancy Rate old' =
+			
+			CALCULATE(AVERAGE(result_occupancy[Area Occ]), result_occupancy[Size] <> "Facility")
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0f837d91-da7e-402c-a7d7-bdebb2198e76
+
+	measure 'Occupied Rate old' = ```
+			
+			    CALCULATE( 
+			        AVERAGE(result_occupancy[OccupiedRent]),
+			    FILTER(
+			        result_occupancy,result_occupancy[Size]="Facility")
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2669e29c-c855-485c-bb2a-cbc075c55cf4
+
+	measure 'Vacant Units old' = ```
+			
+			    CALCULATE ( 
+			        SUM(result_occupancy[Vacant Units]), 
+			    FILTER(
+			        result_occupancy,
+			        result_occupancy[Size]<>"Facility")
+			)
+			```
+		formatString: 0
+		lineageTag: 6910b162-09fa-4d0c-ac7d-8e2b7cd8a7ba
+
+	measure 'Total Units' =
+			
+			var a = [# Units]
+			var b = SUM(result_occupancy[# Units])
+			
+			RETURN
+			a + b
+		formatString: 0
+		lineageTag: 7297f4bf-de70-4acf-916e-273e88d02df6
+
+	measure 'Total Occupied Units' = [Occupied Units old] + [Occupied Units]
+		formatString: 0
+		lineageTag: 7a728222-d85d-4646-a9e0-b04e03e925cc
+
+	measure 'Total Vacant Units' = [Vacant Units old] + [Vacant Unit]
+		formatString: 0
+		lineageTag: f319f78d-ae1a-4460-8546-1402067faab4
+
+	measure 'Total Occupied Rate' = [Occupied Rate old] + [Occupied Rate]
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 37f418a9-aad2-41cb-8008-028a6d7fd93e
+
+	measure 'Unit Occupancy Rate old' = ```
+			
+			DIVIDE(
+			    [Occupied Units old], 
+			    CALCULATE(SUM(result_occupancy[# Units]), FILTER(
+			        result_occupancy, 
+			        result_occupancy[Size] <> "Facility")), 
+			    0
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5b7c456f-f140-42eb-8687-0fec03226b28
+
+	measure 'Cumulative_AR_Balance Old' = ```
+			
+			VAR SelectedDate = MAX('Calendar'[Date])
+			RETURN 
+			CALCULATE(
+			    SUM('book_entries'[AR_Balance]),
+			    'Calendar'[Date] <= SelectedDate,
+			    ALL(PeriodDates)
+			)
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ffce34b0-5509-4765-a2c2-916656242f71
+
+	measure 'Total Units 2' =
+			
+			var a = [# Units]
+			var b = SUM(result_occupancy[# Units])
+			
+			RETURN
+			a + b
+
+	column Column
+		formatString: 0
+		lineageTag: 98743f6a-53e0-4e29-bd1f-178acf5e2bc7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AllMeasures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 7200eb2e9dc94f48a1415f48aa254b79
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

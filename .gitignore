@@ -1,0 +1,26 @@
+# Power BI local cache
+*.pbicache
+*.lock
+.pbi/
+localSettings.json
+
+# Large binary files - not needed for Fabric Git sync
+*.pbix
+*.xlsx
+*.csv
+*.docx
+*.pdf
+
+# Excel folder
+Excel/
+
+# Other non-PBIP files
+Book2.xlsx
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.claude/

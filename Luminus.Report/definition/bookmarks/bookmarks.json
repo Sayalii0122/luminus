@@ -1,0 +1,31 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "45b1fae7a67d88710da6"
+    },
+    {
+      "name": "bba8f760d2e0734b12d1"
+    },
+    {
+      "name": "25825258c33e7649391a"
+    },
+    {
+      "name": "6e62a1a38a074b36d410"
+    },
+    {
+      "name": "d3ccf670db546e0e7371"
+    },
+    {
+      "name": "a9d8b79a0094407c0384"
+    },
+    {
+      "name": "c4edb4e0c8b4b06c86b1",
+      "displayName": "Switch Table",
+      "children": [
+        "9a90f717e880186ee015",
+        "8f73b2f44b3367090126"
+      ]
+    }
+  ]
+}

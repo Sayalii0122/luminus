@@ -1,0 +1,86 @@
+table customer_touches
+	lineageTag: 0bbda0eb-5fd9-4ad8-b2e3-f8df4f5bac75
+
+	column ga_session
+		dataType: string
+		lineageTag: 3ca66d2b-29f2-4db3-9a70-47288570c564
+		summarizeBy: none
+		sourceColumn: ga_session
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: b6c358fa-25ef-41b2-917d-e0daf6859af5
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column gclid
+		dataType: string
+		lineageTag: 81418f43-c21f-4c1f-988c-e4084c396f34
+		summarizeBy: none
+		sourceColumn: gclid
+
+		annotation SummarizationSetBy = Automatic
+
+	column action
+		dataType: string
+		lineageTag: 676c33db-4612-4ee0-aac3-935b6aa77cfd
+		summarizeBy: none
+		sourceColumn: action
+
+		annotation SummarizationSetBy = Automatic
+
+	column created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 84cd2bb6-d110-4fc8-ba4a-f68535e1155e
+		summarizeBy: none
+		sourceColumn: created_at
+
+		variation Variation
+			isDefault
+			relationship: f9bce856-9a7c-48f4-9c23-e3041af54835
+			defaultHierarchy: LocalDateTable_3fdbabab-d916-4945-aace-e7d5a2397382.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_id
+		dataType: string
+		lineageTag: cd74a325-22c8-4b7e-8781-5587803a80f4
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_id
+		dataType: string
+		lineageTag: e08a5afe-9538-4590-900b-10e718a4d27b
+		summarizeBy: none
+		sourceColumn: lease_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_id
+		dataType: string
+		lineageTag: 163853f9-5083-4948-8761-d5278d12c770
+		summarizeBy: none
+		sourceColumn: lead_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customer_touches = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    customer_touches_View = authorized_views_Schema{[Name="customer_touches",Kind="View"]}[Data]
+				in
+				    customer_touches_View
+
+	annotation PBI_ResultType = Table
+

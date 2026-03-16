@@ -1,0 +1,297 @@
+table spaces_historical
+	lineageTag: ee3e6c6d-38de-45ef-ace0-183f70308bff
+
+	column date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8c3f66ee-819a-4365-be73-0f97f915d404
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column org_id
+		dataType: string
+		lineageTag: 20c5787a-a037-4ae5-babe-f38f5413dc9d
+		summarizeBy: none
+		sourceColumn: org_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_name
+		dataType: string
+		lineageTag: 0395ffb4-069d-47db-9f91-000f634a0cc5
+		summarizeBy: none
+		sourceColumn: unit_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_description
+		dataType: string
+		lineageTag: 144f1bac-eb9c-49c2-89db-d0e129127c11
+		summarizeBy: none
+		sourceColumn: unit_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_name
+		dataType: string
+		lineageTag: 91108cd6-9a0a-4194-89a4-9b2c29753c81
+		summarizeBy: none
+		sourceColumn: facility_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id
+		dataType: string
+		lineageTag: 1947b43f-91f2-4cf4-ad73-1c772b3c9212
+		summarizeBy: none
+		sourceColumn: facility_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_address
+		dataType: string
+		lineageTag: 01242128-10f5-4e06-a685-104e57d18395
+		summarizeBy: none
+		sourceColumn: facility_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column building_name
+		dataType: string
+		lineageTag: b7ad5e9f-a3aa-4574-9916-fbfbb76bbda1
+		summarizeBy: none
+		sourceColumn: building_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_occupied
+		dataType: int64
+		formatString: 0
+		lineageTag: 687b2787-c292-438c-a87a-d742245eef68
+		summarizeBy: sum
+		sourceColumn: is_occupied
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_unrentable
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6227eeaf-23bf-4b71-91f2-4039056b3afb
+		summarizeBy: none
+		sourceColumn: is_unrentable
+
+		annotation SummarizationSetBy = Automatic
+
+	column unrentable_reason
+		dataType: string
+		lineageTag: 6a1ed07d-6fe2-42bf-8dbe-a99380363e0e
+		summarizeBy: none
+		sourceColumn: unrentable_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column unrentable_reason_note
+		dataType: string
+		lineageTag: 56d308d1-109b-4d2c-95ab-a5e765d15452
+		summarizeBy: none
+		sourceColumn: unrentable_reason_note
+
+		annotation SummarizationSetBy = Automatic
+
+	column width
+		dataType: double
+		formatString: 0.00
+		lineageTag: 626eb24b-9f77-4f50-b980-ffa6a9155494
+		summarizeBy: sum
+		sourceColumn: width
+
+		annotation SummarizationSetBy = Automatic
+
+	column depth
+		dataType: double
+		formatString: 0.00
+		lineageTag: 895cecd6-3e8a-4830-89a8-72e1889fbec0
+		summarizeBy: sum
+		sourceColumn: depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column height
+		dataType: double
+		lineageTag: 9df1d19b-6460-4e12-b7b3-120123a0adb7
+		summarizeBy: sum
+		sourceColumn: height
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_overlocked
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 35611187-326a-432e-996c-0ba53474388b
+		summarizeBy: none
+		sourceColumn: is_overlocked
+
+		annotation SummarizationSetBy = Automatic
+
+	column pricing_group_name
+		dataType: string
+		lineageTag: f18a5e11-f553-4778-b5a9-7235670bcfca
+		summarizeBy: none
+		sourceColumn: pricing_group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column street_rate
+		dataType: double
+		lineageTag: 6614b608-3946-461b-a2e4-48561edc92f6
+		summarizeBy: sum
+		sourceColumn: street_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column occ_rate
+		dataType: double
+		lineageTag: bf9054ed-57a3-49ac-9a3d-efa4547fe929
+		summarizeBy: sum
+		sourceColumn: occ_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column occ_start_dt
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 068fd1fd-0071-4dad-bd2e-8a03efc92314
+		summarizeBy: none
+		sourceColumn: occ_start_dt
+
+		variation Variation
+			isDefault
+			relationship: 34a27894-afdc-487a-95e9-2f0b9e448d84
+			defaultHierarchy: LocalDateTable_09b6a7f9-8c48-4537-af0d-7032ff9916d2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column occ_tenant_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bdb7e65b-57c8-4b29-9b55-1e7e084adc6d
+		summarizeBy: sum
+		sourceColumn: occ_tenant_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_autopay_enabled
+		dataType: int64
+		formatString: 0
+		lineageTag: 75f443ba-5f5e-4a6d-bbc1-ae13a3f37876
+		summarizeBy: sum
+		sourceColumn: is_autopay_enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_insurance_active
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c7ea4bb-3b3b-4a7d-b22c-42ab98703747
+		summarizeBy: sum
+		sourceColumn: is_insurance_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column occ_tenant_name
+		dataType: string
+		lineageTag: 0552feca-d745-4a23-acb2-5f61810a4d4c
+		summarizeBy: none
+		sourceColumn: occ_tenant_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_unrentable_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 71d5ca6a-1ac5-4e02-b3dd-371a95be8353
+		summarizeBy: sum
+		sourceColumn: is_unrentable_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'sq ft / unit' = ( spaces_historical[depth] * spaces_historical[width] )
+		formatString: 0.00
+		lineageTag: 0b1dd622-85aa-4172-9c0e-09988b1b45a3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_id
+		dataType: string
+		lineageTag: 6b89ec12-7251-466e-869d-7a616bb265c2
+		summarizeBy: none
+		sourceColumn: unit_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column pg_id
+		dataType: string
+		lineageTag: 7cd23eba-a4e0-4335-8a8f-d554316f785c
+		summarizeBy: none
+		sourceColumn: pg_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column lease_id
+		dataType: string
+		lineageTag: c6053f21-b244-4044-8429-3dd52e26976d
+		summarizeBy: none
+		sourceColumn: lease_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_id
+		dataType: string
+		lineageTag: bd380cdc-174f-4ce3-86bb-ddb8493c34f1
+		summarizeBy: none
+		sourceColumn: contact_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column facility_id_new = IF(spaces_historical[facility_id]<>BLANK(),spaces_historical[facility_id],CALCULATE(FIRSTNONBLANK(spaces_historical[facility_id],spaces_historical[facility_id]),FILTER(spaces_historical,spaces_historical[facility_name]=EARLIER(spaces_historical[facility_name]))))
+		lineageTag: edd0098d-7764-495e-b180-3277500b54a6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_name_facility_name = spaces_historical[unit_name] & " -" & spaces_historical[facility_name]
+		lineageTag: 96b9bc61-eec4-4850-b99d-59a8a93f5768
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition spaces_historical = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database(),
+				    #"cubby-production" = Source{[Name="cubby-production"]}[Data],
+				    authorized_views_Schema = #"cubby-production"{[Name="authorized_views",Kind="Schema"]}[Data],
+				    spaces_historical_View = authorized_views_Schema{[Name="spaces_historical",Kind="View"]}[Data],
+				    #"Added Conditional Column" = Table.AddColumn(spaces_historical_View, "is_unrentable_flag", each if [is_unrentable] = true then 1 else 0),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Conditional Column",{{"is_unrentable_flag", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

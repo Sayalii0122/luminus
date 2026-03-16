@@ -1,0 +1,74 @@
+table Metrics
+	lineageTag: 3a1a3794-8508-4d85-9f8f-f2a6dce095f4
+
+	measure Dynamic_Chart_Title = ```
+			
+			IF(
+			    ISBLANK(SELECTEDVALUE(Metrics[Metrics])),
+			    "Select a Metric", 
+			    SELECTEDVALUE(Metrics[Metrics]) & " by Date"
+			)
+			
+			```
+		lineageTag: f6ed77c6-4c0b-40df-9010-129a2e4931c4
+
+	column Parameter
+		lineageTag: 7d230d67-0993-42ee-805f-8e440ee1a015
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 4e1528d4-5891-4b9c-9095-fb971cabef30
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 4d3acdb0-d1aa-463c-9f32-a4afa39ad35c
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Metrics = 'Metrics'[Parameter]
+		lineageTag: 80d08d2b-2372-49d4-b4dd-3f958f86f3c8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metrics = calculated
+		mode: import
+		source =
+				{
+				    ("Area Occupancy", NAMEOF('AllMeasures'[Area Occupancy Rate]), 0),
+				    ("Occupied Rate", NAMEOF(AllMeasures[Occupied Rate]), 1),
+				    ("Unrentable Units", NAMEOF('AllMeasures'[# Unrentable Units]), 2),
+				    ("Unit Occupancy", NAMEOF('AllMeasures'[Unit Occupancy Rate]), 3),
+				    ("Rent/Occupied Area", NAMEOF('AllMeasures'[Rent/Occupied (sq.ft.)]), 4),
+				    ("Leases Past Due", NAMEOF('AllMeasures'[Cumulative Leases Past Due]), 5),
+				    ("% Leases Autopay", NAMEOF('AllMeasures'[% Leases Autopay]), 6),
+				    ("% Leases with Insurnace", NAMEOF('AllMeasures'[% Leases with Insurance]), 7),
+				    ("Scheduled Rent Increases", NAMEOF('AllMeasures'[# Scheduled Rent Increases]), 8),
+				    ("Move-Ins", NAMEOF('AllMeasures'[Move-Ins by Date]), 9),
+				    ("Move-Outs", NAMEOF('AllMeasures'[Move-Outs by Date]), 10)
+				   }
+
+	annotation PBI_Id = ee26ead0cf174c92b1df1a5d9ef60085
+
