@@ -7,7 +7,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["payments","units","managers","pricing_group","leases","leads","contact","customer_touches","unit_turnover","spaces_historical","book_entries","ga_events","result_occupancy"]
+annotation PBI_QueryOrder = ["payments","units","managers","pricing_group","leases","leads","contact","customer_touches","unit_turnover","spaces_historical","book_entries","ga_events"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -54,7 +54,6 @@ ref table Calendar
 ref table PeriodDates
 ref table Date
 ref table DimFacilityTemp
-ref table result_occupancy
 ref table LocalDateTable_a2f93a2c-c335-4c6e-a21a-bb5e13371920
 ref table LocalDateTable_c6742515-4a94-4351-80c9-332ab0d9ebf4
 ref table LocalDateTable_f4817a0d-7383-4625-96a5-03b2a906335c

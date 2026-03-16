@@ -185,7 +185,7 @@ table Calendar
 		mode: import
 		source =
 				
-				VAR basetable = CALENDAR(MIN(result_occupancy[date]), MAX(spaces_historical[date]))
+				VAR basetable = CALENDAR(MIN(spaces_historical[date]), MAX(spaces_historical[date]))
 				RETURN
 				    ADDCOLUMNS(
 				        basetable,

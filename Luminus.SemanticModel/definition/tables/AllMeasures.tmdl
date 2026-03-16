@@ -300,8 +300,7 @@ table AllMeasures
 
 	measure 'Occupied Rate' =
 			var a =  DIVIDE(sum(spaces_historical[occ_rate]),[Date_diff],0)
-			var b = CALCULATE(SUM(result_occupancy[OccupiedRent]), result_occupancy[Size] <> "Facility")
-			RETURN a + b
+			RETURN a
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: c9e9ce73-d1c4-4b23-8604-18b2c6b0cd85
 
@@ -1653,54 +1652,23 @@ table AllMeasures
 			)
 		lineageTag: d768a582-ae24-4aae-a3d1-8fd26751dc16
 
-	measure 'Occupied Units old' = ```
-			
-			CALCULATE(
-			    SUM(result_occupancy[# Occupied]),
-			    FILTER(
-			        result_occupancy, 
-			        result_occupancy[Size] <> "Facility"
-			    ))
-			```
+	measure 'Occupied Units old' = 0
 		formatString: 0
 		lineageTag: 950a30fe-c34c-4965-bc4c-5d3d15fcf276
 
-	measure 'Area Occupancy Rate old' =
-			
-			CALCULATE(AVERAGE(result_occupancy[Area Occ]), result_occupancy[Size] <> "Facility")
+	measure 'Area Occupancy Rate old' = 0
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 0f837d91-da7e-402c-a7d7-bdebb2198e76
 
-	measure 'Occupied Rate old' = ```
-			
-			    CALCULATE( 
-			        AVERAGE(result_occupancy[OccupiedRent]),
-			    FILTER(
-			        result_occupancy,result_occupancy[Size]="Facility")
-			    )
-			```
+	measure 'Occupied Rate old' = 0
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		lineageTag: 2669e29c-c855-485c-bb2a-cbc075c55cf4
 
-	measure 'Vacant Units old' = ```
-			
-			    CALCULATE ( 
-			        SUM(result_occupancy[Vacant Units]), 
-			    FILTER(
-			        result_occupancy,
-			        result_occupancy[Size]<>"Facility")
-			)
-			```
+	measure 'Vacant Units old' = 0
 		formatString: 0
 		lineageTag: 6910b162-09fa-4d0c-ac7d-8e2b7cd8a7ba
 
-	measure 'Total Units' =
-			
-			var a = [# Units]
-			var b = SUM(result_occupancy[# Units])
-			
-			RETURN
-			a + b
+	measure 'Total Units' = [# Units]
 		formatString: 0
 		lineageTag: 7297f4bf-de70-4acf-916e-273e88d02df6
 
@@ -1716,16 +1684,7 @@ table AllMeasures
 		formatString: \$#,0;(\$#,0);\$#,0
 		lineageTag: 37f418a9-aad2-41cb-8008-028a6d7fd93e
 
-	measure 'Unit Occupancy Rate old' = ```
-			
-			DIVIDE(
-			    [Occupied Units old], 
-			    CALCULATE(SUM(result_occupancy[# Units]), FILTER(
-			        result_occupancy, 
-			        result_occupancy[Size] <> "Facility")), 
-			    0
-			)
-			```
+	measure 'Unit Occupancy Rate old' = 0
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 5b7c456f-f140-42eb-8687-0fec03226b28
 
@@ -1742,13 +1701,7 @@ table AllMeasures
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		lineageTag: ffce34b0-5509-4765-a2c2-916656242f71
 
-	measure 'Total Units 2' =
-			
-			var a = [# Units]
-			var b = SUM(result_occupancy[# Units])
-			
-			RETURN
-			a + b
+	measure 'Total Units 2' = [# Units]
 
 	column Column
 		formatString: 0

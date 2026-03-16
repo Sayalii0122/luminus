@@ -154,11 +154,6 @@ relationship e5f2930d-fb6e-266b-acbc-2c04eb5c602b
 	fromColumn: leads.facility_id
 	toColumn: DimFacility.facility_id
 
-relationship 2c4fdea8-7b75-f1ea-9341-0a21ae18679d
-	toCardinality: many
-	fromColumn: result_occupancy.Facility
-	toColumn: DimFacility.facility_name
-
 relationship 29d9e1b4-1cd8-4882-b225-549dee453000
 	joinOnDateBehavior: datePartOnly
 	fromColumn: Calendar.Date
@@ -196,10 +191,6 @@ relationship bbd4cf38-2ed1-5fd5-819d-e7dc660b15c5
 	fromColumn: book_entries.Date
 	toColumn: Calendar.Date
 
-relationship c836a331-0aa9-3aa8-c69f-dd93e644f8a5
-	fromColumn: result_occupancy.Date
-	toColumn: Calendar.Date
-
 relationship 62baa192-5873-4e00-94d5-55ee407dd58f
 	joinOnDateBehavior: datePartOnly
 	fromColumn: Calendar.'End of Month'
@@ -235,8 +226,4 @@ relationship 77b3fd71-45f3-2528-fccd-ff0e8f5416d5
 	fromColumn: book_entries.facility
 	toColumn: DimFacility.facility_name
 
-relationship 10c4be23-1c0c-95c5-c10d-3b6001d64550
-	toCardinality: many
-	fromColumn: result_occupancy.Size
-	toColumn: pricing_group.name
 
